@@ -1,0 +1,40 @@
+/*** Global ***/
+
+select::-ms-expand { display: none;}
+
+input::-ms-clear {display: none;}
+
+select {
+//-moz-appearance: none;
+text-indent: 0.01px;
+text-overflow: '';
+}
+
+/*** grade_conversion_calculator overrides and such ***/
+
+@danger: #E35757;
+
+.gp-conversion-form { 
+    .gp-calculator-container { 
+     	.gp-scale-selector {
+     		.gp-scale-select {
+     			background: url('../../grade_conversion_calculator/img/fa-caret-down3.png')  no-repeat transparent;
+				background-position: 98% 5px;
+				background-size: 20px 20px;
+     		}
+     	}
+		.gp-resource-conversion-calculator {
+             .gp-calculator-row {
+                 margin-bottom: 0;
+             }
+         }
+		.gp-resource-conversion-scale {
+    		.gp-scale-row {
+                margin-bottom: 0;
+            }
+        }
+    }
+}
+
+.gp-duplicate-error {color:@danger; font-size: 90%; margin-top: 5px;}
+

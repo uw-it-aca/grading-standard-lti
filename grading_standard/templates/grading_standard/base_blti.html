@@ -1,0 +1,51 @@
+<!doctype html>
+<html class="no-js">
+<head>
+	<title>UW 4.0 Grade Scale BLTI Application</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta name="HandheldFriendly" content="true">
+
+    {% load staticfiles %}
+    {% load compress %}
+
+    <link rel="stylesheet" type="text/css" href="{% static "grading_standard/css/vendor/bootstrap-3.0.0.min.css" %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static "grading_standard/css/vendor/font-awesome-4.0.3.min.css" %}"/>
+
+    {% compress css %}
+    <link rel="stylesheet" type="text/less" href="{% static "grade_conversion_calculator/css/mobile.less" %}" media="screen, handheld" />
+    <link rel="stylesheet" type="text/less" href="{% static "grade_conversion_calculator/css/desktop.less" %}" media="screen and (min-width: 480px)" />
+    <link rel="stylesheet" type="text/less" href="{% static "grading_standard/css/mobile.less" %}" media="screen, handheld" />
+    <link rel="stylesheet" type="text/less" href="{% static "grading_standard/css/desktop.less" %}" media="screen and (min-width: 480px)" />
+    <link rel="stylesheet" type="text/less" href="{% static "grading_standard/css/blti.less" %}" media="screen and (min-width: 480px)" />
+    {% endcompress %}
+
+    <link rel="shortcut icon" href="{% static "grading_standard/img/favicon.ico" %}">
+
+    <script type="text/javascript" src="{% url "django.views.i18n.javascript_catalog" %}"></script>
+</head>
+<body>
+
+    <div id="wrapper" class="container" style="position:relative;">
+
+        <div id="main-wrapper">
+        	<div id="main" aria-labelledby="uw_grading_scheme_header">
+        	   <div class="inner">{% block content %}{% endblock %}</div>
+        	</div><!--end #main-->
+        </div>
+    </div>
+
+	<!-- jquery cdn -->
+    <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+
+	<!-- javascript last for faster page loading -->
+    {% compress js %}
+    <script src="{% static "grading_standard/js/vendor/bootstrap-3.0.0.min.js" %}"></script>
+    <script src="{% static "grading_standard/js/vendor/handlebars-1.0.0.min.js"  %}"></script>
+	{% block javascript %}{% endblock %}
+    {% endcompress %}
+
+</body>
+</html>

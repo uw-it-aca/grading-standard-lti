@@ -1,0 +1,232 @@
+{% extends 'grading_standard/base_blti.html' %}
+
+{% load staticfiles %}
+{% load templatetag_handlebars %}
+{% load i18n %}
+
+{% block content %}
+
+<!-- Header and help text -->
+
+<h2 id="uw_grading_scheme_header">{% trans 'grading_scheme_header'%}</h2>
+<p>Create a 4.0 grade scale and apply to assignments for this course. Once you create a scale, you can use it for other courses. <a href="http://www.washington.edu/itconnect/learn/tools/canvas/canvas-help-for-instructors/assignments-grading/grading/create-grade-scale/" target="_blank">Learn more about using the UW 4.0 Grade Scale</a>.</p>
+
+<div class="canvas-UW-grade-scheme-container"></div>
+
+{% tplhandlebars "grading-standard" %}
+<!-- Actions -->
+<div><button type="button" id="CreateNew-btn" class="btn btn-primary gp-btn" title="Add scale to this course">{% trans 'add_course_scheme' %}</button></div>
+{% endtplhandlebars %}
+
+<div class="canvas-UW-success-message"></div>
+
+<div class="saved-schemes"></div>
+
+
+{% tplhandlebars "existing-schemes-tmpl" %}
+<!-- EXISTING Scheme box -->
+<div id="existing_scheme_box" class="scheme_box">
+	<h3 id="open-scheme-panel-title" class="panel-title">
+          Reuse Your Grade Scales
+    </h3>
+    <span class="sr-only">Select one from your existing scales and add to this course</span>
+    <ol class="list-group" aria-label="Select a scale to view in calculator">
+	</ol><!-- End of list-->
+</div> <!-- End of Scheme box -->
+
+{% endtplhandlebars %}
+
+
+{% tplhandlebars "saved-schemes-tmpl" %}
+<!-- SAVED Scheme box -->
+<div id="saved_scheme_box" class="scheme_box">
+	<h3 id="open-scheme-panel-title" class="panel-title">
+          Your Grade Scales for {{ course_label }}
+    </h3>
+    <ol class="list-group" aria-label="Select a scale to view details in calculator">
+	</ol><!-- End of list-->
+</div> <!-- End of Scheme box -->
+
+{% endtplhandlebars %}
+
+
+{% tplhandlebars "saved-scheme-tmpl" %} <!-- Content of list starting with li -->
+<li class="scale-list-item clearfix" id="saved_scheme_{{id}}" aria-controls="conversion_grade_scale_container">
+<div>
+	<div class="scheme-name">
+		<a href="#" title="Click to view or modify this scale in calculator">{{{name}}}</a>
+	</div>
+	<div class="creation-date" >
+		Created on {{{created_date}}}
+	</div>
+	<div class="pull-right remove-button">
+		<button type="button" class="btn-xs btn-oldlook" title="Remove '{{{name}}}' ">Remove</button>
+	</div>
+
+	{{#if saved}}
+	<div class="saved-scheme"><i class="fa fa-check"></i> Added to this course
+	</div>
+	{{/if}}
+</div><!-- end of #saved_scheme_ID -->
+</li>
+{% endtplhandlebars %}
+
+
+{% tplhandlebars "grading-success-tmpl" %}
+<div class="alert alert-success alert-dismissable" role="alert" >
+  	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+  	<p>"{{scheme_name}}" is now available to {{course_name}} assignments.</p>
+</div>
+{% endtplhandlebars %}
+
+
+{% tplhandlebars "grading-calculator" %}
+<h3>{{ trans "calculator_intro_header" }}</h3>
+
+<!-- Drop calculator here -->
+<div class="calculator-scheme-container">
+  <div class="grade-standard-calculator-container"></div>
+  <div class="existing-schemes"></div>
+</div>
+{% endtplhandlebars %}
+
+
+{% tplhandlebars "name-and-save-tmpl" %}
+<!-- Name your scheme modal -->
+<div class="modal fade" id="save-scheme-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h3 class="modal-title" id="myModalLabel">Name Your Grade Scale</h3>
+      </div>
+      <div class="modal-body">
+		<p>Give the new scale a unique name before adding to {{ course_name }}</p>
+		<div>
+			<input type="text" name="scheme-name" id="scheme-name" class="form-control" placeholder="Enter a unique name" required title="Enter a unique name to identify this scale.">
+			<label for="scheme-name" >
+				<span class="visuallyhidden">Scale Name:</span>
+				<span id="duplicate-name" class="gp-duplicate-error" style="display: none;" role="alert">The same name already exists. Please enter a new name.</span>
+			</label>
+		</div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-oldlook" data-dismiss="modal">Cancel</button>
+        <button id="save-valid-scheme" type="submit" class="btn btn-primary gp-btn">Done</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endtplhandlebars %}
+
+
+{% tplhandlebars "ajax-fail-tmpl" %}
+<!-- Failure modal -->
+<div class="modal fade" id="failure-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h3 class="modal-title" id="myModalLabel">Grade Scale Could Not Be Saved</h3>
+      </div>
+      <div class="modal-body">
+		<p>A problem occurred. Please try again.</p>
+		<div style="display: none;">
+          {{ failure_message }}
+		</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-oldlook" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endtplhandlebars %}
+
+
+{% tplhandlebars "save-error-tmpl" %}
+<div class="modal fade" id="save-error-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h3 class="modal-title" id="myModalLabel">Grade Scale Error</h3>
+      </div>
+      <div class="modal-body">
+        <p>{{error_count}} invalid grades found.  Correct indicated errors and try again.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-oldlook" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endtplhandlebars %}
+
+
+{% tplhandlebars "remove-modal-tmpl" %}
+<div class="modal fade" id="remove-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h3 class="modal-title" id="myModalLabel">Remove Grade Scale</h3>
+      </div>
+      <div class="modal-body">
+     	<p>Are you sure you want to remove '{{name}}'?</p>
+        <p><strong>Note</strong>: Your grade scale will appear to be available in Assignments even after you remove it here.
+         <a href="http://www.washington.edu/itconnect/learn/tools/canvas/canvas-help-for-instructors/assignments-grading/grading/manage-grade-scale/#delete" target="_blank">Learn how to delete a grade scales</a></P>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-oldlook" data-dismiss="modal">Close</button>
+        <button id="remove-scheme" type="submit" class="btn btn-primary gp-btn" title="Remove from UW 4.0 scales">Remove</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endtplhandlebars %}
+
+
+{% include "grade_conversion_calculator/handlebars/converter.html" %}
+{% include "grade_conversion_calculator/handlebars/calculator_row.html" %}
+{% include "grade_conversion_calculator/handlebars/calculator_addrow.html" %}
+{% include "grade_conversion_calculator/handlebars/grade_scale_row.html" %}
+
+
+<script type="text/javascript">
+window.grading_standard = {
+  session_id: '{{ session_id }}',
+  csrftoken: '{{ csrf_token }}',
+  sis_course_id: '{{ sis_course_id|safe }}',
+  canvas_course_id: '{{ canvas_course_id }}',
+  blti: {{ blti_json|safe }},
+  saved_standards: [
+  {% for standard in grading_standards.all %}
+    {
+        id: {{ standard.id }},
+        name: '{{ standard.name }}',
+        created_date: '{{ standard.created_date|date:"M j, Y" }}' + '&nbsp;&nbsp;' + '{{ standard.created_date|date:"g:i A"|lower }}',
+        scale: '{{ standard.scale }}',
+        scheme: {{ standard.scheme|safe }},
+        classes: [
+          {% for course in standard.gradingstandardcourse_set.all %}
+            { course: '{{ course.course_id }}',
+              date: '{{ course.provisioned_date|date:"M j, Y" }}' + '&nbsp;&nbsp;' + '{{ course.provisioned_date|date:"g:i A"|lower }}',
+              standard_id: '{{ course.grading_standard_id }}'
+            },
+          {% endfor %}
+        ]
+    },
+  {% endfor %}
+  ]
+};
+</script>
+
+{% endblock %}
+
+{% block javascript %}
+<script src="{% static "grading_standard/js/standard.js" %}"></script>
+<script src="{% static "grade_conversion_calculator/js/main.js" %}"></script>
+<script src="{% static "grading_standard/js/handlebars-i18n.js" %}"></script>
+{% endblock %}
