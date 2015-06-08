@@ -15,7 +15,17 @@ setup(
     include_package_data=True,
     install_requires = [
         'setuptools',
-        'django'
+        'django',
+        'django-compressor',
+        'django-templatetag-handlebars',
+        'django_blti',
+        'RestClients',
+        'grade_conversion_calculator'
+    ],
+    dependency_links = [
+        'http://github.com/uw-it-aca/django-blti#egg=django_blti',
+        'http://github.com/uw-it-aca/uw-restclients#egg=RestClients',
+        'http://github.com/uw-it-aca/grade-conversion-calculator#egg=grade_conversion_calculator'
     ],
     license='Apache License, Version 2.0',  # example license
     description='An LTI app for creating grading standards and adding them to a Canvas course ',
