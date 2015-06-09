@@ -6,7 +6,8 @@ from django.core.exceptions import ValidationError
 from django.utils import timezone
 from blti import BLTI, BLTIException
 from blti.views.rest_dispatch import RESTDispatch
-from grading_standard.models import GradingStandard, GradingStandardCourse
+from grading_standard.models import GradingStandard as GradingStandardModel
+from grading_standard.models import GradingStandardCourse
 from restclients.canvas.grading_standards import GradingStandards as Canvas
 from restclients.exceptions import DataFailureException
 from urllib import unquote
@@ -36,7 +37,7 @@ def Main(request, template='grading_standard/standard.html'):
                          sis_user_id=blti_data.get('lis_person_sourcedid'),
                          canvas_course_id=canvas_course_id)
 
-        grading_standards = GradingStandard.objects.filter(
+        grading_standards = GradingStandardModel.objects.filter(
             created_by=canvas_login_id, is_deleted__isnull=True
         ).order_by('created_date')
 
@@ -62,7 +63,7 @@ class GradingStandard(RESTDispatch):
         try:
             blti = BLTI().get_session(request)
             if 'grading_standard_id' in kwargs:
-                grading_standard = GradingStandard.objects.get(
+                grading_standard = GradingStandardModel.objects.get(
                     id=kwargs['grading_standard_id'],
                     created_by=blti.get("user_id"),
                     is_deleted__isnull=True
@@ -70,7 +71,7 @@ class GradingStandard(RESTDispatch):
             else:
                 scheme_name = request.GET.get('name', None)
                 if scheme_name and len(scheme_name.strip()):
-                    grading_standard = GradingStandard.objects.get(
+                    grading_standard = GradingStandardModel.objects.get(
                         name=scheme_name,
                         created_by=blti.get("user_id"),
                         is_deleted__isnull=True
@@ -83,7 +84,7 @@ class GradingStandard(RESTDispatch):
                 "grading_standard": grading_standard.json_data()
             })
 
-        except GradingStandard.DoesNotExist:
+        except GradingStandardModel.DoesNotExist:
             return self.error_response(
                 404, "Unknown Grading Standard: %s" % scheme_name)
 
@@ -101,15 +102,15 @@ class GradingStandard(RESTDispatch):
             return self.error_response(400, "Invalid grading scheme: %s" % err)
 
         try:
-            grading_standard = GradingStandard.objects.get(
+            grading_standard = GradingStandardModel.objects.get(
                 created_by=blti.get("user_id"),
                 name=scheme_name
             )
             grading_standard.is_deleted = None
             grading_standard.deleted_date = None
 
-        except GradingStandard.DoesNotExist:
-            grading_standard = GradingStandard()
+        except GradingStandardModel.DoesNotExist:
+            grading_standard = GradingStandardModel()
             grading_standard.created_by = blti.get("user_id")
             grading_standard.name = scheme_name
             grading_standard.scale = scale
@@ -156,8 +157,8 @@ class GradingStandard(RESTDispatch):
             return self.error_response(404, "Invalid grading standard")
 
         try:
-            grading_standard = GradingStandard.objects.get(pk=gs_id)
-        except GradingStandard.DoesNotExist:
+            grading_standard = GradingStandardModel.objects.get(pk=gs_id)
+        except GradingStandardModel.DoesNotExist:
             return self.error_response(404, "Invalid grading standard")
 
         blti = BLTI().get_session(request)
@@ -180,7 +181,7 @@ class GradingStandard(RESTDispatch):
         return name
 
     def _valid_scale(self, scale):
-        for choice in GradingStandard.SCALE_CHOICES:
+        for choice in GradingStandardModel.SCALE_CHOICES:
             if scale == choice[0]:
                 return scale
 
