@@ -12,7 +12,7 @@ before_script:
   - pip install coverage
   - pip install python-coveralls
   - pip install pep8
-  - pip install jshint
+  - npm install jshint
   - cp travis-ci/manage.py manage.py
 script:
   - pep8 grading_standard/
