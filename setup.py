@@ -17,10 +17,7 @@ setup(
         'setuptools',
         'django',
         'django-compressor',
-        'django-templatetag-handlebars',
-        'django_blti',
-        'RestClients',
-        'grade_conversion_calculator'
+        'django-templatetag-handlebars'
     ],
     dependency_links = [
         'http://github.com/uw-it-aca/django-blti#egg=django_blti',
