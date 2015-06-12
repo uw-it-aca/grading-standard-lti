@@ -20,11 +20,10 @@
                 h = d.getHours(),
                 am = (h > 11) ? 'pm' : 'am';
 
-            return m + '. ' + d.getDate()
-                   + ', ' + d.getFullYear()
-                   + ', ' + ((h > 12) ? (h - 12) : h)
-                   + ':' + ('0' + d.getMinutes()).slice(-2)
-                   + ' ' + am;
+            return m + '. ' + d.getDate() +
+                ', ' + d.getFullYear() +
+                ', ' + ((h > 12) ? (h - 12) : h) +
+                ':' + ('0' + d.getMinutes()).slice(-2) + ' ' + am;
         }
 
         function ajaxFailureModal(msg) {
