@@ -1,7 +1,7 @@
 4.0 Grading Standard LTI App
 ===========================
 
-A Django LTI Application for creating grading standards and adding them to a Canvas course  
+A Django LTI Application for creating grading standards and adding them to a Canvas course
 
 Installation
 ------------
@@ -30,9 +30,9 @@ Project settings.py
     RESTCLIENTS_CANVAS_HOST = 'example.instructure.com'
     RESTCLIENTS_CANVAS_OAUTH_BEARER = ''
 
-**BLTI settings***
-    
-    [django-blti settings](https://github.com/uw-it-aca/django-blti#project-settingspy)
+**BLTI settings**
+
+[django-blti settings](https://github.com/uw-it-aca/django-blti#project-settingspy)
 
 Project urls.py
 ---------------
