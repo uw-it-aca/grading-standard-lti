@@ -43,6 +43,7 @@ def Main(request, template='grading_standard/standard.html'):
 
     except Exception as err:
         blti_error = '%s' % err
+        template = 'blti/error.html'
 
     t = loader.get_template(template)
     c = Context({
@@ -51,7 +52,7 @@ def Main(request, template='grading_standard/standard.html'):
         'sis_course_id': sis_course_id,
         'canvas_course_id': canvas_course_id,
         'blti_json': json.dumps(blti_data),
-        'blti_error': blti_error,
+        'validation_error': blti_error,
     })
 
     c.update(csrf(request))
