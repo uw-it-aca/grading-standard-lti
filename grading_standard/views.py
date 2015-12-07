@@ -118,6 +118,10 @@ class GradingStandard(RESTDispatch):
 
         grading_standard.scheme = json.dumps(scheme_data)
 
+        # For Canvas, append the lower bound explicitly
+        canvas_scheme = json.loads(grading_standard.scheme)
+        canvas_scheme.append({"grade": "0.0", "min_percentage": 0})
+
         client = Canvas()
         try:
             canvas_gs = client.create_grading_standard_for_course(
@@ -125,7 +129,7 @@ class GradingStandard(RESTDispatch):
                 scheme_name,
                 map(lambda s: {"name": s["grade"],
                                "value": s["min_percentage"]},
-                    json.loads(grading_standard.scheme)),
+                    canvas_scheme),
                 unquote(client.sis_user_id(blti.get('sis_user_id'))))
 
         except DataFailureException as ex:
