@@ -23,9 +23,6 @@ class LaunchView(BLTILaunchView):
         request = kwargs.get('request')
         blti_data = kwargs.get('blti_params')
         canvas_login_id = blti_data.get('custom_canvas_user_login_id')
-        canvas_course_id = blti_data.get('custom_canvas_course_id')
-        sis_course_id = blti_data.get('lis_course_offering_sourcedid',
-                                      'course_%s' % canvas_course_id)
 
         grading_standards = GradingStandardModel.objects.filter(
             created_by=canvas_login_id, is_deleted__isnull=True
@@ -34,8 +31,13 @@ class LaunchView(BLTILaunchView):
         context = {
             'session_id': request.session.session_key,
             'grading_standards': grading_standards,
-            'sis_course_id': sis_course_id,
-            'canvas_course_id': canvas_course_id
+            'sis_course_id': blti_data.get('lis_course_offering_sourcedid',
+                                           'course_%s' % canvas_course_id),
+            'canvas_course_id': blti_data.get('custom_canvas_course_id'),
+            'course_title': blti_data.get('context_title'),
+            'course_name': blti_data.get('context_label'),
+            'launch_presentation_return_url': blti_data.get(
+                'launch_presentation_return_url'),
         }
         context.update(csrf(request))
         return context
