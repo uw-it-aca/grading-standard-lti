@@ -83,7 +83,7 @@ class GradingStandard(RESTDispatch):
         try:
             data = json.loads(request.body).get("grading_standard", {})
             scheme_name = self._valid_scheme_name(data.get("name", "").strip())
-            course_id = self._valid_course_id(
+            course_sis_id = self._valid_course_id(
                 data.get("course_id", "").strip())
             scale = self._valid_scale(data.get("scale", "").strip())
             scheme_data = self._valid_grading_scheme(data.get("scheme", []))
