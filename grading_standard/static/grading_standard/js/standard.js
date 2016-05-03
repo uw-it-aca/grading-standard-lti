@@ -58,12 +58,12 @@
 
             node.html(tpl({
                 scheme_name: standard.name,
-                course_name: window.grading_standard.blti.context_title
+                course_name: window.grading_standard.course_title
             }));
 
             $('a', node).click(function (e) {
                 e.preventDefault();
-                top.location.replace(window.grading_standard.blti.launch_presentation_return_url);
+                top.location.replace(window.grading_standard.launch_presentation_return_url);
             });
         }
 
@@ -109,7 +109,7 @@
             } else {
                 tpl = Handlebars.compile($('#' + which + '-schemes-tmpl').html());
                 $('.' + which + '-schemes').html(tpl({
-                    course_label: window.grading_standard.blti.context_label
+                    course_name: window.grading_standard.course_name
                 }));
                 $('#' + which + '_scheme_box ol').append(node);
             }
@@ -132,8 +132,8 @@
 
                 $('body').append(tmpl({
                     name: scheme.name,
-                    scheme_edit_url: window.grading_standard.blti.launch_presentation_return_url + '/grading_standards',
-                    course_label: window.grading_standard.blti.context_label
+                    scheme_edit_url: window.grading_standard.launch_presentation_return_url + '/grading_standards',
+                    course_name: window.grading_standard.course_name
                 }));
                 modal_container = $('#remove-modal');
                 modal_container.modal();
@@ -218,8 +218,8 @@
             // collect the name
             tpl = Handlebars.compile($('#name-and-save-tmpl').html());
             $('body').append(tpl({
-                course_name: window.grading_standard.blti.context_title,
-                course_label: window.grading_standard.blti.context_label
+                course_title: window.grading_standard.course_title,
+                course_name: window.grading_standard.course_name
             }));
             modal_container = $('#save-scheme-modal');
 
