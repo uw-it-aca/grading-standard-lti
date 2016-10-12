@@ -88,7 +88,6 @@ class GradingStandard(RESTDispatch):
             scale = self._valid_scale(data.get("scale", "").strip())
             scheme_data = self._valid_grading_scheme(data.get("scheme", []))
         except ValidationError as err:
-            logger.exception(err)
             return self.error_response(400, "Invalid grading scheme: %s" % err)
 
         try:
@@ -122,9 +121,11 @@ class GradingStandard(RESTDispatch):
                 unquote(client.sis_user_id(sis_user_id)))
 
         except DataFailureException as ex:
-            logger.exception(ex)
             grading_standard.save()
-            return self.error_response(500, "Unable to save scheme: %s" % ex)
+            content = json.loads(ex.msg)
+            content["status_code"] = ex.status
+            return self.error_response(
+                500, "Unable to save scheme", content=content)
 
         grading_standard.name = canvas_gs.title
         grading_standard.provisioned_date = timezone.now()
