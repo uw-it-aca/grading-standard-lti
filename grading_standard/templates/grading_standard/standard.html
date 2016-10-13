@@ -131,10 +131,7 @@
         <h3 class="modal-title" id="myModalLabel">Grade Scale Could Not Be Saved</h3>
       </div>
       <div class="modal-body">
-		<p>A problem occurred. Please try again.</p>
-		<div style="display: none;">
-          {{ failure_message }}
-		</div>
+          <p>{{#if failure_message}}{{ failure_message }}{{else}}A problem occurred. Please try again.{{/if}}</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-oldlook" data-dismiss="modal">Close</button>
