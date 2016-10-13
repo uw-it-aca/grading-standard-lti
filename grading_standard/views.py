@@ -122,10 +122,9 @@ class GradingStandard(RESTDispatch):
 
         except DataFailureException as ex:
             grading_standard.save()
-            content = json.loads(ex.msg)
-            content["status_code"] = ex.status
             return self.error_response(
-                500, "Unable to save scheme", content=content)
+                500,
+                "There was a problem saving this scale in Canvas: %s" % ex.msg)
 
         grading_standard.name = canvas_gs.title
         grading_standard.provisioned_date = timezone.now()
