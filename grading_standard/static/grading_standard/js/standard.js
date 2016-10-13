@@ -28,9 +28,10 @@
 
         function ajaxFailureModal(msg) {
             var tpl = Handlebars.compile($('#ajax-fail-tmpl').html()),
+                data = JSON.parse(msg),
                 modal_container;
 
-            $('body').append(tpl({failure_message: msg}));
+            $('body').append(tpl({failure_message: data.error}));
             modal_container = $('#failure-modal');
             modal_container.modal();
             modal_container.on('hidden.bs.modal', function () {
