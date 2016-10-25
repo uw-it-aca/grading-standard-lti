@@ -9,7 +9,7 @@
     http://www.imsglobal.org/xsd/imslticm_v1p0 http://www.imsglobal.org/xsd/lti/ltiv1p0/imslticm_v1p0.xsd
     http://www.imsglobal.org/xsd/imslticp_v1p0 http://www.imsglobal.org/xsd/lti/ltiv1p0/imslticp_v1p0.xsd">
     <blti:launch_url>https://example.uw.edu/grading_standard/</blti:launch_url>
-    <blti:title>4.0 Grading Standard</blti:title>
+    <blti:title>Add 4.0 Grade Scale</blti:title>
     <blti:description>Create grading standards and add them to your course</blti:description>
     <blti:custom> 
       <lticm:property name="courseid_parameter">lis_course_offering_sourcedid</lticm:property> 
