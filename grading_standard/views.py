@@ -56,13 +56,12 @@ class GradingStandard(RESTDispatch):
                     is_deleted__isnull=True
                 )
             else:
-                scheme_name = request.GET.get('name', None)
-                if scheme_name and len(scheme_name.strip()):
-                    grading_standard = GradingStandardModel.objects.get(
-                        name=scheme_name,
-                        created_by=user_id,
-                        is_deleted__isnull=True
-                    )
+                name = self._valid_scheme_name(request.GET.get('name', ''))
+                grading_standard = GradingStandardModel.objects.get(
+                    name=name,
+                    created_by=user_id,
+                    is_deleted__isnull=True
+                )
 
             if 'grading_standard' not in locals():
                 return self.error_response(400, "Unspecified grading standard")
@@ -71,9 +70,10 @@ class GradingStandard(RESTDispatch):
                 "grading_standard": grading_standard.json_data()
             })
 
+        except ValidationError as err:
+            return self.error_response(400, "Invalid grading scheme: %s" % err)
         except GradingStandardModel.DoesNotExist:
-            return self.error_response(
-                404, "Unknown Grading Standard: %s" % scheme_name)
+            return self.error_response(404, "Grading Standard not found")
 
     def POST(self, request, **kwargs):
         blti = self.get_session(request)
@@ -82,7 +82,7 @@ class GradingStandard(RESTDispatch):
         course_id = blti.get('custom_canvas_course_id')
         try:
             data = json.loads(request.body).get("grading_standard", {})
-            scheme_name = self._valid_scheme_name(data.get("name", "").strip())
+            scheme_name = self._valid_scheme_name(data.get("name", ""))
             course_sis_id = self._valid_course_id(
                 data.get("course_id", "").strip())
             scale = self._valid_scale(data.get("scale", "").strip())
@@ -171,15 +171,16 @@ class GradingStandard(RESTDispatch):
         })
 
     def _valid_scheme_name(self, name):
-        if not (name and len(name) > 0):
-            raise ValidationError("Name is required")
-        return name
+        if name is not None:
+            name = name.encode("utf-8").strip()
+            if len(name):
+                return name
+        raise ValidationError("Name is required")
 
     def _valid_scale(self, scale):
         for choice in GradingStandardModel.SCALE_CHOICES:
             if scale == choice[0]:
                 return scale
-
         raise ValidationError("Invalid scale: %s" % (scale))
 
     def _valid_grading_scheme(self, scheme):
