@@ -34,6 +34,9 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'grading_standard',
+    'grade_conversion_calculator',
+    'restclients',
+    'blti',
 )
 
 MIDDLEWARE_CLASSES = (

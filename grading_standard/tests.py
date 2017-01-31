@@ -30,10 +30,10 @@ class GradingStandardTest(TestCase):
             GradingStandard.valid_scheme_name(u'valid'), 'valid')
         self.assertEquals(
             GradingStandard.valid_scheme_name(123), '123')
-        self.assertRaises(ValidationError,
-            GradingStandard.valid_scheme_name, '  ')
-        self.assertRaises(ValidationError,
-            GradingStandard.valid_scheme_name, None)
+        self.assertRaises(
+            ValidationError, GradingStandard.valid_scheme_name, '  ')
+        self.assertRaises(
+            ValidationError, GradingStandard.valid_scheme_name, None)
 
     def test_valid_scale(self):
         self.assertEquals(GradingStandard.valid_scale('ug'), 'ug')
@@ -47,25 +47,26 @@ class GradingStandardTest(TestCase):
     def test_valid_grading_scheme(self):
         scheme = [1, 2, 3]
         self.assertEquals(GradingStandard.valid_grading_scheme(scheme), scheme)
-        self.assertRaises(ValidationError,
-            GradingStandard.valid_grading_scheme, None)
-        self.assertRaises(ValidationError,
-            GradingStandard.valid_grading_scheme, 'abc')
-        self.assertRaises(ValidationError,
-            GradingStandard.valid_grading_scheme, {'a': True})
-        self.assertRaises(ValidationError,
-            GradingStandard.valid_grading_scheme, [])
+        self.assertRaises(
+            ValidationError, GradingStandard.valid_grading_scheme, None)
+        self.assertRaises(
+            ValidationError, GradingStandard.valid_grading_scheme, 'abc')
+        self.assertRaises(
+            ValidationError, GradingStandard.valid_grading_scheme, {'a': True})
+        self.assertRaises(
+            ValidationError, GradingStandard.valid_grading_scheme, [])
 
     def test_valid_course_id(self):
         self.assertEquals(GradingStandard.valid_course_id('abc'), 'abc')
         self.assertEquals(GradingStandard.valid_course_id('ABC'), 'ABC')
         self.assertEquals(GradingStandard.valid_course_id(34), '34')
-        self.assertRaises(ValidationError,
-            GradingStandard.valid_course_id, '')
-        self.assertRaises(ValidationError,
-            GradingStandard.valid_course_id, '   ')
-        self.assertRaises(ValidationError,
-            GradingStandard.valid_course_id, None)
+        self.assertRaises(
+            ValidationError, GradingStandard.valid_course_id, '')
+        self.assertRaises(
+            ValidationError, GradingStandard.valid_course_id, '   ')
+        self.assertRaises(
+            ValidationError, GradingStandard.valid_course_id, None)
+
 
 class CanvasDAOTest(TestCase):
     @mock.patch.object(GradingStandards, 'create_grading_standard_for_course')
@@ -85,5 +86,5 @@ class CanvasDAOTest(TestCase):
         r = create_grading_standard(course_id, name, scheme, sis_user_id)
         mock_method.assert_called_with(
             course_id, name,
-            [{'name': '4.0', 'value': 95},{'name': '0.0', 'value': 0}],
+            [{'name': '4.0', 'value': 95}, {'name': '0.0', 'value': 0}],
             'sis_user_id:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
