@@ -1,10 +1,7 @@
 language: python
 python:
-  - "2.6"
   - "2.7"
-  - "3.4"
 install:
-  - if [[ $TRAVIS_PYTHON_VERSION == 2.6* ]]; then pip install -r travis-ci/python-2.6-require-django-1.6.txt; fi
   - pip install .
 before_script:
   - pip install coverage
@@ -19,6 +16,3 @@ script:
 after_script:
   - coveralls
 notifications:
-  webhooks:
-      urls:
-        - https://yarn.cac.washington.edu/rest/botalyst/v1/travis-ci
