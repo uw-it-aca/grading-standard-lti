@@ -1,9 +1,22 @@
 from django.db import models
+from django.core.exceptions import ValidationError
 import logging
 import json
 
 
 logger = logging.getLogger(__name__)
+
+
+class GradingStandardManager(models.Manager):
+    def find_by_login(self, login_id, id=None, name=None):
+        kwargs = {'created_by': login_id, 'is_deleted__isnull': True}
+        if id is not None:
+            kwargs['id'] = id
+        if name is not None:
+            kwargs['name'] = name
+
+        return super(GradingStandardManager, self).get_queryset().filter(
+            **kwargs).order_by('created_date')
 
 
 class GradingStandard(models.Model):
@@ -25,6 +38,8 @@ class GradingStandard(models.Model):
     provisioned_date = models.DateTimeField(null=True)
     is_deleted = models.NullBooleanField()
     deleted_date = models.DateTimeField(null=True)
+
+    objects = GradingStandardManager()
 
     def json_data(self):
         try:
@@ -48,6 +63,37 @@ class GradingStandard(models.Model):
                 "deleted_date": self.deleted_date.isoformat() if (
                     self.deleted_date is not None) else None,
                 }
+
+    @staticmethod
+    def valid_scheme_name(name):
+        if name is not None:
+            name = str(name).encode('utf-8').strip()
+            if len(name):
+                return name
+        raise ValidationError('Name is required')
+
+    @staticmethod
+    def valid_scale(scale):
+        if scale is not None:
+            scale = str(scale).lower()
+            for choice in GradingStandard.SCALE_CHOICES:
+                if scale == choice[0]:
+                    return scale
+        raise ValidationError('Invalid scale: %s' % (scale))
+
+    @staticmethod
+    def valid_grading_scheme(scheme):
+        if type(scheme) is list and len(scheme):
+            return scheme
+        raise ValidationError('Scheme is required')
+
+    @staticmethod
+    def valid_course_id(sis_course_id):
+        if sis_course_id is not None:
+            sis_course_id = str(sis_course_id).strip()
+            if len(sis_course_id):
+                return sis_course_id
+        raise ValidationError('Course SIS ID is required')
 
 
 class GradingStandardCourse(models.Model):
