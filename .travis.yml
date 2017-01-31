@@ -1,6 +1,9 @@
+sudo: false
 language: python
 python:
   - "2.7"
+before_install:
+  - cp travis-ci/test_requirements.txt requirements.txt
 install:
   - pip install .
 before_script:
@@ -10,7 +13,7 @@ before_script:
   - npm install jshint
   - cp travis-ci/manage.py manage.py
 script:
-  - pep8 grading_standard/
+  - pep8 grading_standard/ --exclude=migrations
   - jshint grading_standard/static/grading_standard/js/standard.js --verbose
   - coverage run --source=grading_standard manage.py test grading_standard
 after_script:
