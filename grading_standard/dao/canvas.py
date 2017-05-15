@@ -1,5 +1,8 @@
-from restclients.canvas.grading_standards import GradingStandards
-from urllib import unquote
+from uw_canvas.grading_standards import GradingStandards
+try:
+    from urllib.parse import unquote
+except ImportError:
+    from urllib import unquote
 
 
 def create_grading_standard(course_id, name, scheme_data, sis_user_id):

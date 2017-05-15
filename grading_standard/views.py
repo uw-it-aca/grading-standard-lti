@@ -5,7 +5,7 @@ from blti.views import BLTILaunchView
 from blti.views.rest_dispatch import RESTDispatch
 from grading_standard.models import GradingStandard, GradingStandardCourse
 from grading_standard.dao.canvas import create_grading_standard
-from restclients.exceptions import DataFailureException
+from restclients_core.exceptions import DataFailureException
 import logging
 import json
 

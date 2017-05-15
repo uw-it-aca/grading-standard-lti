@@ -1,11 +1,10 @@
-from django.conf.urls import patterns, url, include
+from django.conf.urls import url
 from grading_standard.views import LaunchView, GradingStandardView
 
 
-urlpatterns = patterns(
-    '',
+urlpatterns = [
     url(r'^$', LaunchView.as_view()),
     url(r'^api/v1/grading_standards/$', GradingStandardView().run),
     url(r'^api/v1/grading_standards/(?P<grading_standard_id>[^/]*)$',
         GradingStandardView().run),
-)
+]

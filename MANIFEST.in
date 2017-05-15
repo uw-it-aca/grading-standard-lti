@@ -1,0 +1,2 @@
+include grading_standard/VERSION
+recursive-include grading_standard *
