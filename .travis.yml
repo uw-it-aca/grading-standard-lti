@@ -1,22 +1,22 @@
 sudo: false
 language: python
 python:
-  - "2.7"
+- '2.7'
 before_install:
-  - cp travis-ci/test_requirements.txt requirements.txt
+- cp travis-ci/test_requirements.txt requirements.txt
 before_script:
-  - pip install -r requirements.txt
-  - pip install coverage
-  - pip install python-coveralls
-  - pip install pep8
-  - npm install jshint
-  - cp travis-ci/manage.py manage.py
+- pip install -r requirements.txt
+- pip install coverage
+- pip install python-coveralls
+- pip install pep8
+- npm install jshint
+- cp travis-ci/manage.py manage.py
 script:
-  - pep8 grading_standard/ --exclude=migrations
-  - jshint grading_standard/static/grading_standard/js/standard.js --verbose
-  - coverage run --source=grading_standard manage.py test grading_standard
+- pep8 grading_standard/ --exclude=migrations
+- jshint grading_standard/static/grading_standard/js/standard.js --verbose
+- coverage run --source=grading_standard manage.py test grading_standard
 after_success:
-  - coveralls
+- coveralls
 before_deploy:
 - find grading_standard/ -name \*.pyc -exec rm {} \;
 - echo $TRAVIS_TAG > grading_standard/VERSION
@@ -26,7 +26,7 @@ deploy:
   user: uw-it-aca
   skip_cleanup: true
   password:
-    secure:
+    secure: nnnamWy0vA5uaNHozVZ69+tEsuYmoCc6qdZlxeRNymNNRJFOqjsLxbC0zPihW7U1HzlUm3+USbYmF8M474C/tdujsgzWELzuFSQNX6i1MYrhs6dWR8+OTiCl5e5TDEPogbCDMYQ5EJA9giFedP3pIO5FahQNRfwpkzbk5TYXjfIhtqHuz3tt5APJr/hbB+dCcBJRgGmU8/y6AQRRxiXrhnLFS4WAD2bJbzzHnL17Ad3JowGfiskHp0fZ/wNeJpsLwjyNcLbHjBTtM6z4kZKmXSzk0P+rP3TNGCf60nf/TYBMszj1rzCtn06M/MEHaIVhquvacVDpRADoBA+6ZqwAPzZxboZ45VKT0RR79C5aQLsQoteJ91rrzjZq9LRdp1tKNzIdlrWGALal7Y9DQCLUEQ6OH01cKsQKZOj5dQf4cRehDKcugxg0Uk44r4UlmzcYybhE/Xi1LsrunLJOxIJr1dXUiaCkKB9LGj/ZVIn/9mFr+26LKX8uFVXHk4PRPNWWb6J4TzTwYRyGUQUOEJ0xCpDOeePbPIxQ/Vg9NFIycJzEtCy1zUbSMapq1VqaX/tZRmZ/oX4zzQGn3KTX2Tc14/hKxrnrWlHb+4eMKZzCSH3lzi/go0lvWZjuFroikoLp2Vk4cXzgoPv6aSuj+VKO3DO439kz2G6ZbF/7q/OHjOg=
   on:
     tags: true
     python: '2.7'
