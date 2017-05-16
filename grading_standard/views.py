@@ -1,4 +1,3 @@
-from django.core.context_processors import csrf
 from django.core.exceptions import ValidationError
 from django.utils import timezone
 from blti.views import BLTILaunchView
@@ -25,7 +24,7 @@ class LaunchView(BLTILaunchView):
 
         grading_standards = GradingStandard.objects.find_by_login(login_id)
 
-        context = {
+        return {
             'session_id': request.session.session_key,
             'grading_standards': grading_standards,
             'sis_course_id': blti_data.get('lis_course_offering_sourcedid',
@@ -36,8 +35,6 @@ class LaunchView(BLTILaunchView):
             'launch_presentation_return_url': blti_data.get(
                 'launch_presentation_return_url'),
         }
-        context.update(csrf(request))
-        return context
 
 
 class GradingStandardView(RESTDispatch):
