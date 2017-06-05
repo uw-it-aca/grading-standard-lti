@@ -11,8 +11,8 @@ def create_grading_standard(course_id, name, scheme_data, sis_user_id):
     # For Canvas, append the lower bound explicitly
     scheme_data.append({'grade': '0.0', 'min_percentage': 0})
 
-    scheme = map(lambda s: {
-        'name': s['grade'], 'value': s['min_percentage']}, scheme_data)
+    scheme = list(map(lambda s: {
+        'name': s['grade'], 'value': s['min_percentage']}, scheme_data))
 
     user_id = unquote(client.sis_user_id(sis_user_id))
 

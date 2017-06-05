@@ -67,7 +67,7 @@ class GradingStandard(models.Model):
     @staticmethod
     def valid_scheme_name(name):
         if name is not None:
-            name = str(name).encode('utf-8').strip()
+            name = str(name).strip()
             if len(name):
                 return name
         raise ValidationError('Name is required')
