@@ -1,7 +1,6 @@
 from django.core.exceptions import ValidationError
 from django.utils import timezone
-from blti.views import BLTILaunchView
-from blti.views.rest_dispatch import RESTDispatch
+from blti.views import BLTILaunchView, RESTDispatch
 from grading_standard.models import GradingStandard, GradingStandardCourse
 from grading_standard.dao.canvas import create_grading_standard
 from restclients_core.exceptions import DataFailureException
@@ -18,30 +17,32 @@ class LaunchView(BLTILaunchView):
 
     def get_context_data(self, **kwargs):
         request = kwargs.get('request')
-        blti_data = kwargs.get('blti_params')
-        login_id = blti_data.get('custom_canvas_user_login_id', '')
-        course_id = blti_data.get('custom_canvas_course_id')
+        login_id = self.blti.user_login_id
+        course_id = self.blti.canvas_course_id
 
         grading_standards = GradingStandard.objects.find_by_login(login_id)
+
+        if self.blti.course_sis_id:
+            course_sis_id = self.blti.course_sis_id
+        else:
+            course_sis_id = 'course_%s' % course_id
 
         return {
             'session_id': request.session.session_key,
             'grading_standards': grading_standards,
-            'sis_course_id': blti_data.get('lis_course_offering_sourcedid',
-                                           'course_%s' % course_id),
+            'sis_course_id': course_sis_id,
             'canvas_course_id': course_id,
-            'course_title': blti_data.get('context_title'),
-            'course_name': blti_data.get('context_label'),
-            'launch_presentation_return_url': blti_data.get(
-                'launch_presentation_return_url'),
+            'course_title': self.blti.course_long_name,
+            'course_name': self.blti.course_short_name,
+            'launch_presentation_return_url': self.blti.return_url,
         }
 
 
 class GradingStandardView(RESTDispatch):
-    def GET(self, request, **kwargs):
+    authorized_role = 'admin'
+
+    def get(self, request, *args, **kwargs):
         try:
-            blti = self.get_session(request)
-            login_id = blti.get('custom_canvas_user_login_id', '')
             name = request.GET.get('name', '')
             if 'grading_standard_id' in kwargs:
                 kwargs['id'] = kwargs['grading_standard_id']
@@ -49,7 +50,7 @@ class GradingStandardView(RESTDispatch):
                 kwargs['name'] = GradingStandard.valid_scheme_name(name)
 
             grading_standard = GradingStandard.objects.find_by_login(
-                login_id, **kwargs)[0]
+                self.blti.user_login_id, **kwargs)[0]
 
             if 'grading_standard' not in locals():
                 return self.error_response(400, "Unspecified grading standard")
@@ -63,11 +64,10 @@ class GradingStandardView(RESTDispatch):
         except IndexError as err:
             return self.error_response(404, "Grading Standard not found")
 
-    def POST(self, request, **kwargs):
-        blti = self.get_session(request)
-        login_id = blti.get('custom_canvas_user_login_id')
-        sis_user_id = blti.get('lis_person_sourcedid')
-        course_id = blti.get('custom_canvas_course_id')
+    def post(self, request, *args, **kwargs):
+        login_id = self.blti.user_login_id
+        sis_user_id = self.blti.user_sis_id
+        course_id = self.blti.canvas_course_id
         try:
             data = json.loads(request.body).get("grading_standard", {})
             name = GradingStandard.valid_scheme_name(data.get("name", ""))
@@ -123,7 +123,7 @@ class GradingStandardView(RESTDispatch):
             "grading_standard": grading_standard.json_data()
         })
 
-    def DELETE(self, request, **kwargs):
+    def delete(self, request, *args, **kwargs):
         gs_id = kwargs.get("grading_standard_id", None)
         if gs_id is None:
             return self.error_response(404, "Invalid grading standard")
@@ -133,9 +133,7 @@ class GradingStandardView(RESTDispatch):
         except GradingStandard.DoesNotExist:
             return self.error_response(404, "Invalid grading standard")
 
-        blti = self.get_session(request)
-        user_id = blti.get('custom_canvas_user_login_id')
-        if grading_standard.created_by != user_id:
+        if grading_standard.created_by != self.blti.user_login_id:
             return self.error_response(401, "Not authorized")
 
         grading_standard.is_deleted = True
