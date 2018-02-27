@@ -1,3 +1,4 @@
+# -*- coding:utf-8 -*-
 from django.test import TestCase
 from django.core.exceptions import ValidationError
 from django.db.models.query import QuerySet
@@ -29,7 +30,9 @@ class GradingStandardTest(TestCase):
         self.assertEquals(
             GradingStandard.valid_scheme_name(u'valid'), 'valid')
         self.assertEquals(
-            GradingStandard.valid_scheme_name(123), '123')
+            GradingStandard.valid_scheme_name('名称'), '名称')
+        self.assertEquals(
+            GradingStandard.valid_scheme_name('123'), '123')
         self.assertRaises(
             ValidationError, GradingStandard.valid_scheme_name, '  ')
         self.assertRaises(
@@ -42,7 +45,7 @@ class GradingStandardTest(TestCase):
         self.assertRaises(ValidationError, GradingStandard.valid_scale, '')
         self.assertRaises(ValidationError, GradingStandard.valid_scale, None)
         self.assertRaises(ValidationError, GradingStandard.valid_scale, 'abc')
-        self.assertRaises(ValidationError, GradingStandard.valid_scale, 3)
+        self.assertRaises(ValidationError, GradingStandard.valid_scale, '3')
 
     def test_valid_grading_scheme(self):
         scheme = [1, 2, 3]
@@ -59,7 +62,7 @@ class GradingStandardTest(TestCase):
     def test_valid_course_id(self):
         self.assertEquals(GradingStandard.valid_course_id('abc'), 'abc')
         self.assertEquals(GradingStandard.valid_course_id('ABC'), 'ABC')
-        self.assertEquals(GradingStandard.valid_course_id(34), '34')
+        self.assertEquals(GradingStandard.valid_course_id('34'), '34')
         self.assertRaises(
             ValidationError, GradingStandard.valid_course_id, '')
         self.assertRaises(

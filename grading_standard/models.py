@@ -67,7 +67,7 @@ class GradingStandard(models.Model):
     @staticmethod
     def valid_scheme_name(name):
         if name is not None:
-            name = str(name).strip()
+            name = name.strip()
             if len(name):
                 return name
         raise ValidationError('Name is required')
@@ -75,7 +75,7 @@ class GradingStandard(models.Model):
     @staticmethod
     def valid_scale(scale):
         if scale is not None:
-            scale = str(scale).lower()
+            scale = scale.lower()
             for choice in GradingStandard.SCALE_CHOICES:
                 if scale == choice[0]:
                     return scale
@@ -90,7 +90,7 @@ class GradingStandard(models.Model):
     @staticmethod
     def valid_course_id(sis_course_id):
         if sis_course_id is not None:
-            sis_course_id = str(sis_course_id).strip()
+            sis_course_id = sis_course_id.strip()
             if len(sis_course_id):
                 return sis_course_id
         raise ValidationError('Course SIS ID is required')
