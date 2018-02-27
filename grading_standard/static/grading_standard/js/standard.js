@@ -240,7 +240,7 @@
                 $('#save-valid-scheme', modal_container).prop('disabled', true);
             }
 
-            $('#scheme-name', modal_container).on('keyup', function () {
+            $('#scheme-name', modal_container).on('input', function () {
                 $('#duplicate-name', modal_container).hide();
                 if ($(this).val().trim().length > 0) {
                     $('#save-valid-scheme', modal_container).prop('disabled', false);
