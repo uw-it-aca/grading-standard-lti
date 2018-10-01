@@ -1,7 +1,6 @@
 {% extends 'grading_standard/base_blti.html' %}
 
 {% load staticfiles %}
-{% load templatetag_handlebars %}
 {% load i18n %}
 
 {% block content %}
@@ -13,17 +12,19 @@
 
 <div class="canvas-UW-grade-scheme-container"></div>
 
-{% tplhandlebars "grading-standard" %}
+{% verbatim %}
+<script id="grading-standard" type="text/x-handlebars-template">
 <!-- Actions -->
 <div><button type="button" id="CreateNew-btn" class="btn btn-primary gp-btn" title="Add scale to this course">Add a Scale to this Course</button></div>
-{% endtplhandlebars %}
+</script>
+{% endverbatim %}
 
 <div class="canvas-UW-success-message"></div>
 
 <div class="saved-schemes"></div>
 
-
-{% tplhandlebars "existing-schemes-tmpl" %}
+{% verbatim %}
+<script id="existing-schemes-tmpl" type="text/x-handlebars-template">
 <!-- EXISTING Scheme box -->
 <div id="existing_scheme_box" class="scheme_box">
 	<h3 id="open-scheme-panel-title" class="panel-title">
@@ -33,11 +34,11 @@
     <ol class="list-group" aria-label="Select a scale to view in calculator">
 	</ol><!-- End of list-->
 </div> <!-- End of Scheme box -->
+</script>
+{% endverbatim %}
 
-{% endtplhandlebars %}
-
-
-{% tplhandlebars "saved-schemes-tmpl" %}
+{% verbatim %}
+<script id="saved-schemes-tmpl" type="text/x-handlebars-template">
 <!-- SAVED Scheme box -->
 <div id="saved_scheme_box" class="scheme_box">
 	<h3 id="open-scheme-panel-title" class="panel-title">
@@ -46,11 +47,12 @@
     <ol class="list-group" aria-label="Select a scale to view details in calculator">
 	</ol><!-- End of list-->
 </div> <!-- End of Scheme box -->
+</script>
+{% endverbatim %}
 
-{% endtplhandlebars %}
-
-
-{% tplhandlebars "saved-scheme-tmpl" %} <!-- Content of list starting with li -->
+{% verbatim %}
+<script id="saved-scheme-tmpl" type="text/x-handlebars-template">
+<!-- Content of list starting with li -->
 <li class="scale-list-item clearfix" id="saved_scheme_{{id}}" aria-controls="conversion_grade_scale_container">
 <div>
 	<div class="scheme-name">
@@ -69,18 +71,20 @@
 	{{/if}}
 </div><!-- end of #saved_scheme_ID -->
 </li>
-{% endtplhandlebars %}
+</script>
+{% endverbatim %}
 
-
-{% tplhandlebars "grading-success-tmpl" %}
+{% verbatim %}
+<script id="grading-success-tmpl" type="text/x-handlebars-template">
 <div class="alert alert-success alert-dismissable" role="alert" >
   	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
   	<p>"{{scheme_name}}" is now available to {{course_name}} assignments.</p>
 </div>
-{% endtplhandlebars %}
+</script>
+{% endverbatim %}
 
-
-{% tplhandlebars "grading-calculator" %}
+{% verbatim %}
+<script id="grading-calculator" type="text/x-handlebars-template">
 <h3>{{ trans "calculator_intro_header" }}</h3>
 
 <!-- Drop calculator here -->
@@ -88,10 +92,11 @@
   <div class="grade-standard-calculator-container"></div>
   <div class="existing-schemes"></div>
 </div>
-{% endtplhandlebars %}
+</script>
+{% endverbatim %}
 
-
-{% tplhandlebars "name-and-save-tmpl" %}
+{% verbatim %}
+<script id="name-and-save-tmpl" type="text/x-handlebars-template">
 <!-- Name your scheme modal -->
 <div class="modal fade" id="save-scheme-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -118,10 +123,11 @@
     </div>
   </div>
 </div>
-{% endtplhandlebars %}
+</script>
+{% endverbatim %}
 
-
-{% tplhandlebars "ajax-fail-tmpl" %}
+{% verbatim %}
+<script id="ajax-fail-tmpl" type="text/x-handlebars-template">
 <!-- Failure modal -->
 <div class="modal fade" id="failure-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -139,10 +145,11 @@
     </div>
   </div>
 </div>
-{% endtplhandlebars %}
+</script>
+{% endverbatim %}
 
-
-{% tplhandlebars "save-error-tmpl" %}
+{% verbatim %}
+<script id="save-error-tmpl" type="text/x-handlebars-template">
 <div class="modal fade" id="save-error-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -159,10 +166,11 @@
     </div>
   </div>
 </div>
-{% endtplhandlebars %}
+</script>
+{% endverbatim %}
 
-
-{% tplhandlebars "remove-modal-tmpl" %}
+{% verbatim %}
+<script id="remove-modal-tmpl" type="text/x-handlebars-template">
 <div class="modal fade" id="remove-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -182,8 +190,8 @@
     </div>
   </div>
 </div>
-{% endtplhandlebars %}
-
+</script>
+{% endverbatim %}
 
 {% include "grade_conversion_calculator/handlebars/converter.html" %}
 {% include "grade_conversion_calculator/handlebars/calculator_row.html" %}
@@ -221,7 +229,6 @@ window.grading_standard = {
   ]
 };
 </script>
-
 {% endblock %}
 
 {% block javascript %}
