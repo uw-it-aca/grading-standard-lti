@@ -20,13 +20,15 @@ setup(
     packages=['grading_standard'],
     include_package_data=True,
     install_requires = [
-        'Django>=1.10,<1.11',
-        'django-blti>=1.2',
-        'UW-RestClients-Canvas>=0.2,<1.0',
-        'UW-Grade-Conversion-Calculator>=0.2,<1.0',
+        'Django>=2.1',
+        'django-blti>=2.0',
+        'UW-RestClients-Canvas>=1.0.1,<2.0',
+        'UW-Grade-Conversion-Calculator>1.0',
     ],
     license='Apache License, Version 2.0',
-    description='An LTI app for creating grading standards and adding them to a Canvas course ',
+    description=(
+        'An LTI app for creating grading standards and adding them to a '
+        'Canvas course'),
     long_description=README,
     url='https://github.com/uw-it-aca/grading-standard-lti',
     author="UW-IT AXDD",
@@ -38,7 +40,6 @@ setup(
         'License :: OSI Approved :: Apache Software License',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
-        'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3.6',
     ],
 )
