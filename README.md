@@ -21,7 +21,6 @@ Project settings.py
     'grading_standard',
     'grade_conversion_calculator',
     'blti',
-    'templatetag_handlebars',
 
 **REST client app settings**
 
