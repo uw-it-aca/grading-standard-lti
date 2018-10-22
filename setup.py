@@ -21,9 +21,9 @@ setup(
     include_package_data=True,
     install_requires = [
         'Django>=2.1',
-        'django-blti>=2.0',
+        'django-blti>=2.1.2',
         'UW-RestClients-Canvas>=1.0.1,<2.0',
-        'UW-Grade-Conversion-Calculator>1.0',
+        'UW-Grade-Conversion-Calculator>=1.1',
     ],
     license='Apache License, Version 2.0',
     description=(
