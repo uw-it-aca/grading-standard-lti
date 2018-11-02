@@ -1,6 +1,5 @@
-from django.conf.urls import include, url
-
+from django.urls import include, re_path
 
 urlpatterns = [
-    url(r'^grading_standard/', include('grading_standard.urls')),
+    re_path(r'^grading_standard/', include('grading_standard.urls')),
 ]

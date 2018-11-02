@@ -24,7 +24,7 @@ class LaunchView(BLTILaunchView):
         if self.blti.course_sis_id:
             course_sis_id = self.blti.course_sis_id
         else:
-            course_sis_id = 'course_%s' % course_id
+            course_sis_id = 'course_{}'.format(course_id)
 
         return {
             'session_id': self.request.session.session_key,
@@ -59,7 +59,8 @@ class GradingStandardView(RESTDispatch):
             })
 
         except ValidationError as err:
-            return self.error_response(400, "Invalid grading scheme: %s" % err)
+            return self.error_response(
+                400, "Invalid grading scheme: {}".format(err))
         except IndexError as err:
             return self.error_response(404, "Grading Standard not found")
 
@@ -76,7 +77,8 @@ class GradingStandardView(RESTDispatch):
             scheme_data = GradingStandard.valid_grading_scheme(
                 data.get("scheme", []))
         except ValidationError as err:
-            return self.error_response(400, "Invalid grading scheme: %s" % err)
+            return self.error_response(
+                400, "Invalid grading scheme: {}".format(err))
 
         try:
             grading_standard = GradingStandard.objects.find_by_login(
@@ -100,7 +102,8 @@ class GradingStandardView(RESTDispatch):
         except DataFailureException as ex:
             grading_standard.save()
             return self.error_response(
-                500, "There was a problem saving this scale in Canvas: %s" % (
+                500,
+                "There was a problem saving this scale in Canvas: {}".format(
                     ex.msg))
 
         grading_standard.name = canvas_gs.title

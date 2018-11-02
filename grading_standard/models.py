@@ -79,7 +79,7 @@ class GradingStandard(models.Model):
             for choice in GradingStandard.SCALE_CHOICES:
                 if scale == choice[0]:
                     return scale
-        raise ValidationError('Invalid scale: %s' % (scale))
+        raise ValidationError('Invalid scale: {}'.format(scale))
 
     @staticmethod
     def valid_grading_scheme(scheme):
@@ -99,7 +99,7 @@ class GradingStandard(models.Model):
 class GradingStandardCourse(models.Model):
     """ Represents a grading standard.
     """
-    standard = models.ForeignKey(GradingStandard)
+    standard = models.ForeignKey(GradingStandard, on_delete=models.CASCADE)
     course_id = models.CharField(max_length=80)
     grading_standard_id = models.CharField(max_length=30, null=True)
     provisioned_date = models.DateTimeField(auto_now_add=True)
