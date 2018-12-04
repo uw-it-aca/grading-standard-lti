@@ -13,7 +13,7 @@ before_script:
 - npm install -g jshint
 - cp travis-ci/manage.py manage.py
 script:
-- pycodestyle grading_standard/
+- pycodestyle grading_standard/ --exclude=migrations
 - jshint grading_standard/static/grading_standard/js/standard.js --verbose
 - coverage run --source=grading_standard manage.py test grading_standard
 after_success:
