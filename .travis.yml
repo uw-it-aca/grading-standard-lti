@@ -1,29 +1,55 @@
-sudo: false
+sudo: required
 language: python
 python:
 - '3.6'
+services:
+- docker
+os:
+- linux
+
+env:
+  global:
+  - RELEASE_NAME="grading-standards"
+  - DJANGO_APP="grading_standard"
+  - COMMIT_HASH="$(git rev-parse --short=7 HEAD)"
+  - IMAGE_TAG="${RELEASE_NAME}:${COMMIT_HASH}"
+  - DEPLOY_SCRIPT_BASE=https://raw.githubusercontent.com/uw-it-aca/gcp-app-deploy/master
+
+install:
+- docker build --target app-container -t "$IMAGE_TAG" .
+- docker build -t "${IMAGE_TAG}-test" .
+
 before_script:
-- pip install -e .
 - pip install coverage
 - pip install coveralls
-- pip install pycodestyle
-- npm install -g jshint
-- cp travis-ci/manage.py manage.py
+
 script:
-- pycodestyle grading_standard/ --exclude=migrations
-- jshint grading_standard/static/grading_standard/js/standard.js --verbose
-- coverage run --source=grading_standard manage.py test grading_standard
+- docker run -u root -it -v /tmp:/coverage -e DJANGO_APP="$DJANGO_APP" -e "ENV=localdev"
+  -e "AUTH=BLTI_DEV" "${IMAGE_TAG}-test" bash -c ". ./travis-ci/test.sh"
+
 after_success:
+- cp /tmp/.coverage.* .
+- coverage combine
 - coveralls
-before_deploy:
-- find grading_standard/ -name \*.pyc -exec rm {} \;
-- echo $TRAVIS_TAG > grading_standard/VERSION
-deploy:
-  provider: pypi
-  user: uw-it-aca
-  skip_cleanup: true
-  password:
-    secure: nnnamWy0vA5uaNHozVZ69+tEsuYmoCc6qdZlxeRNymNNRJFOqjsLxbC0zPihW7U1HzlUm3+USbYmF8M474C/tdujsgzWELzuFSQNX6i1MYrhs6dWR8+OTiCl5e5TDEPogbCDMYQ5EJA9giFedP3pIO5FahQNRfwpkzbk5TYXjfIhtqHuz3tt5APJr/hbB+dCcBJRgGmU8/y6AQRRxiXrhnLFS4WAD2bJbzzHnL17Ad3JowGfiskHp0fZ/wNeJpsLwjyNcLbHjBTtM6z4kZKmXSzk0P+rP3TNGCf60nf/TYBMszj1rzCtn06M/MEHaIVhquvacVDpRADoBA+6ZqwAPzZxboZ45VKT0RR79C5aQLsQoteJ91rrzjZq9LRdp1tKNzIdlrWGALal7Y9DQCLUEQ6OH01cKsQKZOj5dQf4cRehDKcugxg0Uk44r4UlmzcYybhE/Xi1LsrunLJOxIJr1dXUiaCkKB9LGj/ZVIn/9mFr+26LKX8uFVXHk4PRPNWWb6J4TzTwYRyGUQUOEJ0xCpDOeePbPIxQ/Vg9NFIycJzEtCy1zUbSMapq1VqaX/tZRmZ/oX4zzQGn3KTX2Tc14/hKxrnrWlHb+4eMKZzCSH3lzi/go0lvWZjuFroikoLp2Vk4cXzgoPv6aSuj+VKO3DO439kz2G6ZbF/7q/OHjOg=
-  on:
-    tags: true
-    python: '3.6'
+- |
+  if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
+    case "$TRAVIS_BRANCH" in
+      "master")
+        export APP_INSTANCE="prod";
+        ;;
+      "develop")
+        export APP_INSTANCE="test";
+        ;;
+      *)
+        unset APP_INSTANCE
+        ;;
+    esac
+    if [[ "$APP_INSTANCE" ]]; then
+      curl -Ls ${DEPLOY_SCRIPT_BASE}/travis-ci/deploy.sh | bash;
+    fi
+  fi
+
+cache:
+  directories:
+  - "$HOME/helm"
+  - "$HOME/kubeval"
