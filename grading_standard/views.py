@@ -7,7 +7,6 @@ from restclients_core.exceptions import DataFailureException
 import logging
 import json
 
-
 logger = logging.getLogger(__name__)
 
 
@@ -142,7 +141,7 @@ class GradingStandardView(RESTDispatch):
         grading_standard.deleted_date = timezone.now()
         grading_standard.save()
 
-        logger.info("Grading scheme deleted")
+        logger.info("Grading scheme deleted: {}".format(gs_id))
 
         return self.json_response({
             "grading_standard": grading_standard.json_data()
