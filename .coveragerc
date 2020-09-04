@@ -1,0 +1,8 @@
+[run]
+source = grading-standard-lti
+parallel = True
+
+[paths]
+source =
+  grading_standard/
+  /app/grading_standard/

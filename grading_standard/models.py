@@ -1,10 +1,6 @@
 from django.db import models
 from django.core.exceptions import ValidationError
-import logging
 import json
-
-
-logger = logging.getLogger(__name__)
 
 
 class GradingStandardManager(models.Manager):

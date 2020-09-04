@@ -4,6 +4,7 @@ from django.core.exceptions import ValidationError
 from django.db.models.query import QuerySet
 from grading_standard.dao.canvas import *
 from grading_standard.models import GradingStandard
+from datetime import datetime
 import mock
 
 
@@ -69,6 +70,15 @@ class GradingStandardTest(TestCase):
             ValidationError, GradingStandard.valid_course_id, '   ')
         self.assertRaises(
             ValidationError, GradingStandard.valid_course_id, None)
+
+    def test_json_data(self):
+        json_data = GradingStandard(
+            name='abc', scheme='[1, 2, 3]', created_by='j',
+            created_date=datetime.now()).json_data()
+
+        self.assertEqual(json_data['created_by'], 'j')
+        self.assertEqual(json_data['name'], 'abc')
+        self.assertEqual(json_data['scheme'], [1, 2, 3])
 
 
 class CanvasDAOTest(TestCase):
