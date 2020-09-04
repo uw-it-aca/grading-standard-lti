@@ -1,6 +1,8 @@
 from .base_settings import *
+import os
 
-DEBUG = True if (os.getenv('ENV', 'localdev') == 'localdev') else False
+if os.getenv('ENV', 'localdev') == 'localdev':
+    DEBUG = True
 
 INSTALLED_APPS += [
     'grading_standard.apps.GradingStandardConfig',
@@ -9,8 +11,11 @@ INSTALLED_APPS += [
 ]
 
 COMPRESS_ROOT = '/static/'
-COMPRESS_PRECOMPILERS = (('text/less', 'lessc {infile} {outfile}'),)
+COMPRESS_PRECOMPILERS = (
+    ('text/less', 'lessc {infile} {outfile}'),
+)
 COMPRESS_OFFLINE = True
-STATICFILES_FINDERS += ('compressor.finders.CompressorFinder',)
 
-
+STATICFILES_FINDERS += (
+    'compressor.finders.CompressorFinder',
+)
