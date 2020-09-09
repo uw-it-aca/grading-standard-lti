@@ -59,7 +59,7 @@ externalSecrets:
       data:
         - name: django-secret
           property: django-secret
-    - name: test-grading-standards.canvas.uw.edu-canvas-secrets
+    - name: test-grading-standards.canvas.uw.edu-shared-secrets
       externalKey: axdd/kv/data/grading-standards/shared/secrets
       data:
         - name: lti-consumers
@@ -68,6 +68,9 @@ externalSecrets:
           property: blti-aes-key
         - name: blti-aes-iv
           property: blti-aes-iv
+    - name: test-grading-standards.canvas.uw.edu-canvas-secrets
+      externalKey: axdd/kv/data/canvas/shared/secrets
+      data:
         - name: canvas-api-token
           property: canvas-api-token
     - name: test-grading-standards.canvas.uw.edu-sql-secrets
@@ -84,15 +87,15 @@ environmentVariablesSecrets:
     secretKey: django-secret
   LTIConsumers:
     name: LTI_CONSUMERS
-    secretName: test-grading-standards.canvas.uw.edu-canvas-secrets
+    secretName: test-grading-standards.canvas.uw.edu-shared-secrets
     secretKey: lti-consumers
   BLTIAESKey:
     name: BLTI_AES_KEY
-    secretName: test-grading-standards.canvas.uw.edu-canvas-secrets
+    secretName: test-grading-standards.canvas.uw.edu-shared-secrets
     secretKey: blti-aes-key
   BLTIAESIV:
     name: BLTI_AES_IV
-    secretName: test-grading-standards.canvas.uw.edu-canvas-secrets
+    secretName: test-grading-standards.canvas.uw.edu-shared-secrets
     secretKey: blti-aes-iv
   canvasAPIToken:
     name: CANVAS_OAUTH_BEARER
