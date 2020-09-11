@@ -24,7 +24,7 @@ externalService:
   enabled: true
   name: grading-standards-db-service
   type: ClusterIP
-  serviceAddress: 172.18.0.26
+  serviceAddress: 172.18.0.28
   servicePort: 3306
 database:
   engine: mysql
@@ -74,7 +74,7 @@ externalSecrets:
         - name: canvas-api-token
           property: canvas-api-token
     - name: test-grading-standards.canvas.uw.edu-sql-secrets
-      externalKey: axdd/kv/data/grading-standards/test/sql-secrets
+      externalKey: axdd/kv/data/canvas/shared/sql-secrets
       data:
         - name: username
           property: username
