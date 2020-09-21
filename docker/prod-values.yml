@@ -1,6 +1,6 @@
 autoscaling:
   enabled: true
-  minReplicas: 1
+  minReplicas: 2
   maxReplicas: 4
 targetAverageUtilization: 100
 resources:
@@ -36,7 +36,7 @@ externalService:
   enabled: true
   name: grading-standards-db-service
   type: ClusterIP
-  serviceAddress: 172.18.0.26
+  serviceAddress: 172.18.0.28
   servicePort: 3306
 database:
   engine: mysql
@@ -71,7 +71,7 @@ externalSecrets:
       data:
         - name: django-secret
           property: django-secret
-    - name: grading-standards.canvas.uw.edu-canvas-secrets
+    - name: grading-standards.canvas.uw.edu-shared-secrets
       externalKey: axdd/kv/data/grading-standards/shared/secrets
       data:
         - name: lti-consumers
@@ -80,10 +80,13 @@ externalSecrets:
           property: blti-aes-key
         - name: blti-aes-iv
           property: blti-aes-iv
+    - name: grading-standards.canvas.uw.edu-canvas-secrets
+      externalKey: axdd/kv/data/canvas/shared/secrets
+      data:
         - name: canvas-api-token
           property: canvas-api-token
     - name: grading-standards.canvas.uw.edu-sql-secrets
-      externalKey: axdd/kv/data/grading-standards/prod/sql-secrets
+      externalKey: axdd/kv/data/canvas/shared/sql-secrets
       data:
         - name: username
           property: username
@@ -96,15 +99,15 @@ environmentVariablesSecrets:
     secretKey: django-secret
   LTIConsumers:
     name: LTI_CONSUMERS
-    secretName: grading-standards.canvas.uw.edu-canvas-secrets
+    secretName: grading-standards.canvas.uw.edu-shared-secrets
     secretKey: lti-consumers
   BLTIAESKey:
     name: BLTI_AES_KEY
-    secretName: grading-standards.canvas.uw.edu-canvas-secrets
+    secretName: grading-standards.canvas.uw.edu-shared-secrets
     secretKey: blti-aes-key
   BLTIAESIV:
     name: BLTI_AES_IV
-    secretName: grading-standards.canvas.uw.edu-canvas-secrets
+    secretName: grading-standards.canvas.uw.edu-shared-secrets
     secretKey: blti-aes-iv
   canvasAPIToken:
     name: CANVAS_OAUTH_BEARER
