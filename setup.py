@@ -20,11 +20,11 @@ setup(
     packages=['grading_standard'],
     include_package_data=True,
     install_requires = [
-        'Django>=2.1,<2.2',
+        'Django>=2.2.13,<3.0',
         'django-blti>=2.2.1',
         'django-compressor',
         'UW-RestClients-Core>=1.3.3,<2.0',
-        'UW-RestClients-Canvas>=1.1.9,<2.0',
+        'UW-RestClients-Canvas>=1.1.12,<2.0',
         'UW-Grade-Conversion-Calculator>=1.1',
     ],
     license='Apache License, Version 2.0',
