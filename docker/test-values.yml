@@ -43,6 +43,8 @@ certs:
 environmentVariables:
   - name: CLUSTER_CNAME
     value: test-grading-standards.canvas.uw.edu
+  - name: WEBSERVER
+    value: nginx
   - name: AUTH
     value: BLTI
   - name: ENV
