@@ -34,7 +34,7 @@ database:
 repo: grading-standards
 instance: test
 image:
-  repository: registry.hub.docker.com/acait/grading-standards
+  repository: gcr.io/uwit-mci-axdd/grading-standards
   tag: IMAGE_TAG
 memcached:
   enabled: false
@@ -43,6 +43,8 @@ certs:
 environmentVariables:
   - name: CLUSTER_CNAME
     value: test-grading-standards.canvas.uw.edu
+  - name: WEBSERVER
+    value: nginx
   - name: AUTH
     value: BLTI
   - name: ENV
