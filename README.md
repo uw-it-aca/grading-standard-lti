@@ -1,17 +1,9 @@
-4.0 Grading Standard LTI App
-===========================
+# 4.0 Grading Standard LTI App
+
+[![Build Status](https://github.com/uw-it-aca/grading-standard-lti/workflows/Build%2C%20Test%20and%20Deploy/badge.svg?branch=master)](https://github.com/uw-it-aca/grading-standard-lti/actions)
+[![Coverage Status](https://coveralls.io/repos/github/uw-it-aca/grading-standard-lti/badge.svg?branch=master)](https://coveralls.io/github/uw-it-aca/grading-standard-lti?branch=master)
 
 A Django LTI Application for creating grading standards and adding them to a Canvas course
-
-Installation
-------------
-
-**Project directory**
-
-Install grading-standard-lti in your project.
-
-    $ cd [project]
-    $ pip install UW-Grading-Standard-LTI
 
 Project settings.py
 ------------------
