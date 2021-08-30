@@ -3,6 +3,7 @@
 
 from django.core.exceptions import ValidationError
 from django.utils import timezone
+from django.conf import settings
 from blti.views import BLTILaunchView, RESTDispatch
 from grading_standard.models import GradingStandard, GradingStandardCourse
 from grading_standard.dao.canvas import create_grading_standard
@@ -36,6 +37,7 @@ class LaunchView(BLTILaunchView):
             'course_title': self.blti.course_long_name,
             'course_name': self.blti.course_short_name,
             'launch_presentation_return_url': self.blti.return_url,
+            'documentation_url': getattr(settings, 'DOCUMENTATION_URL'),
         }
 
 

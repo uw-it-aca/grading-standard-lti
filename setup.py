@@ -19,7 +19,7 @@ setup(
     packages=['grading_standard'],
     include_package_data=True,
     install_requires = [
-        'Django~=2.2',
+        'Django~=3.2',
         'django-blti~=2.2',
         'django-compressor',
         'UW-RestClients-Core~=1.3',
