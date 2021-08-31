@@ -19,3 +19,5 @@ COMPRESS_OFFLINE = True
 STATICFILES_FINDERS += (
     'compressor.finders.CompressorFinder',
 )
+
+DOCUMENTATION_URL = os.getenv('DOCUMENTATION_URL')

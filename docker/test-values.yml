@@ -70,6 +70,8 @@ externalSecrets:
           property: blti-aes-key
         - name: blti-aes-iv
           property: blti-aes-iv
+        - name: documentation-url
+          property: documentation-url
     - name: test-grading-standards.canvas.uw.edu-canvas-secrets
       externalKey: axdd/kv/data/canvas/shared/secrets
       data:
@@ -99,6 +101,10 @@ environmentVariablesSecrets:
     name: BLTI_AES_IV
     secretName: test-grading-standards.canvas.uw.edu-shared-secrets
     secretKey: blti-aes-iv
+  documentationURL:
+    name: DOCUMENTATION_URL
+    secretName: test-grading-standards.canvas.uw.edu-shared-secrets
+    secretKey: documentation-url
   canvasAPIToken:
     name: CANVAS_OAUTH_BEARER
     secretName: test-grading-standards.canvas.uw.edu-canvas-secrets
