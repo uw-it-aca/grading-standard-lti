@@ -3,13 +3,9 @@ autoscaling:
   minReplicas: 2
   maxReplicas: 4
 targetAverageUtilization: 100
-resources:
-  limits:
-    cpu: 1.0
-    memory: 768Mi
-  requests:
-    cpu: 100m
-    memory: 700Mi
+affinity:
+   podsSpanNodes: true
+
 ingress:
   enabled: true
   tls:
@@ -24,14 +20,14 @@ ingress:
         - "/"
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt
+
 lifecycle:
   enabled: true
   preStop:
     enabled: true
-affinity:
-   podsSpanNodes: true
 readiness:
   enabled: true
+
 externalService:
   enabled: true
   name: grading-standards-db-service
@@ -43,15 +39,19 @@ database:
   name: grading_standards_prod
   hostname: grading-standards-db-service
   secretName: grading-standards.canvas.uw.edu-sql-secrets
+
 repo: grading-standards
 instance: prod
 image:
   repository: gcr.io/uwit-mci-axdd/grading-standards
   tag: IMAGE_TAG
+
 memcached:
   enabled: false
+
 certs:
   mounted: false
+
 environmentVariables:
   - name: CLUSTER_CNAME
     value: grading-standards.canvas.uw.edu
@@ -63,6 +63,7 @@ environmentVariables:
     value: PROD
   - name: CANVAS_TIMEOUT
     value: "10"
+
 externalSecrets:
   enabled: true
   secrets:
@@ -94,6 +95,7 @@ externalSecrets:
           property: username
         - name: password
           property: password
+
 environmentVariablesSecrets:
   djangoSecret:
     name: DJANGO_SECRET
