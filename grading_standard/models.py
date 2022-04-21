@@ -36,7 +36,7 @@ class GradingStandard(models.Model):
     created_by = models.CharField(max_length=32)
     created_date = models.DateTimeField(auto_now_add=True)
     provisioned_date = models.DateTimeField(null=True)
-    is_deleted = models.NullBooleanField()
+    is_deleted = models.BooleanField(null=True)
     deleted_date = models.DateTimeField(null=True)
 
     objects = GradingStandardManager()
