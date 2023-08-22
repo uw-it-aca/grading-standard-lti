@@ -25,6 +25,7 @@ setup(
         'UW-RestClients-Core~=1.3',
         'UW-RestClients-Canvas~=1.2',
         'UW-Grade-Conversion-Calculator>=1.4',
+        'django-extensions',
     ],
     license='Apache License, Version 2.0',
     description=(
