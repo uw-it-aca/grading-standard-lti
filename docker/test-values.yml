@@ -26,10 +26,10 @@ externalService:
   enabled: true
   name: grading-standards-db-service
   type: ClusterIP
-  serviceAddress: 172.18.0.28
-  servicePort: 3306
+  serviceAddress: 172.18.1.43
+  servicePort: 5432
 database:
-  engine: mysql
+  engine: postgres
   name: grading_standards_test
   hostname: grading-standards-db-service
   secretName: test-grading-standards.canvas.uw.edu-sql-secrets
