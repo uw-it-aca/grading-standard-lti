@@ -19,10 +19,10 @@ setup(
     packages=['grading_standard'],
     include_package_data=True,
     install_requires = [
-        'Django~=3.2',
+        'Django~=4.2',
         'django-blti>=2.2.4',
         'django-compressor',
-        'UW-RestClients-Core~=1.3',
+        'UW-RestClients-Core~=1.4',
         'UW-RestClients-Canvas~=1.2',
         'UW-Grade-Conversion-Calculator>=1.4',
     ],
