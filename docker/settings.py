@@ -3,6 +3,8 @@ import os
 
 if os.getenv('ENV', 'localdev') == 'localdev':
     DEBUG = True
+else:
+    CSRF_TRUSTED_ORIGINS = ['https://' + os.getenv('CLUSTER_CNAME')]
 
 INSTALLED_APPS += [
     'grading_standard.apps.GradingStandardConfig',
