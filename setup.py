@@ -20,7 +20,7 @@ setup(
     include_package_data=True,
     install_requires = [
         'Django~=4.2',
-        'django-blti>=2.2.4',
+        'django-blti~=2.2',
         'django-compressor',
         'UW-RestClients-Core~=1.4',
         'UW-RestClients-Canvas~=1.2',
@@ -32,7 +32,7 @@ setup(
         'Canvas course'),
     long_description=README,
     url='https://github.com/uw-it-aca/grading-standard-lti',
-    author="UW-IT AXDD",
+    author="UW-IT T&LS",
     author_email="aca-it@uw.edu",
     classifiers=[
         'Environment :: Web Environment',
