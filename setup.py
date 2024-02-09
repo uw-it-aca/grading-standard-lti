@@ -28,7 +28,7 @@ setup(
     ],
     license='Apache License, Version 2.0',
     description=(
-        'An LTI app for creating grading standards and adding them to a '
+        'An LTI app for creating UW grading standards and adding them to a '
         'Canvas course'),
     long_description=README,
     url='https://github.com/uw-it-aca/grading-standard-lti',
