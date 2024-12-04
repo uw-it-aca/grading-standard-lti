@@ -68,6 +68,13 @@
             });
         }
 
+        function hideSaveSuccessMessage() {
+            var node = $('.canvas-UW-success-message');
+            node.fadeOut('fast', function () {
+              $(this).empty();
+            });
+        }
+
         function prependSavedScheme(scheme, which) {
             var tpl = Handlebars.compile($('#saved-scheme-tmpl').html()),
                 schemes = $('#' + which + '_scheme_box ol li .scheme-name'),
@@ -134,6 +141,7 @@
                 $('body').append(tmpl({
                     name: scheme.name,
                     scheme_edit_url: window.grading_standard.launch_presentation_return_url + '/grading_standards',
+                    documentation_url: window.grading_standard.documentation_url,
                     course_name: window.grading_standard.course_name
                 }));
                 modal_container = $('#remove-modal');
@@ -164,6 +172,7 @@
                                 $('.' + which + '-schemes').empty();
                             }
                         });
+                        hideSaveSuccessMessage();
                     });
                 });
             });
