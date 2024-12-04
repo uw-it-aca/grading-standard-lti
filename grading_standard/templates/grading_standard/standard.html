@@ -181,7 +181,7 @@
       <div class="modal-body">
      	<p>Are you sure you want to remove '{{name}}'?</p>
         <p><strong>Note</strong>: Your grade scale will appear to be available in Assignments even after you remove it here.
-         <a href="http://www.washington.edu/itconnect/learn/tools/canvas/canvas-help-for-instructors/assignments-grading/grading/manage-grade-scale/#delete" target="_blank">Learn how to delete a grade scales</a></P>
+         <a href="{{documentation_url}}" target="_blank">Learn how to delete a grade scale</a></p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-oldlook" data-dismiss="modal">Close</button>
@@ -208,6 +208,7 @@ window.grading_standard = {
   course_title: '{{ course_title }}',
   course_name: '{{ course_name }}',
   launch_presentation_return_url: '{{ launch_presentation_return_url }}',
+  documentation_url: '{{ documentation_url }}',
   saved_standards: [
   {% for standard in grading_standards.all %}
     {

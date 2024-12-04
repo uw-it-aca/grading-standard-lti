@@ -19,12 +19,12 @@ setup(
     packages=['grading_standard'],
     include_package_data=True,
     install_requires = [
-        'Django~=4.2',
+        'django~=4.2',
         'django-blti~=2.2',
         'django-compressor',
-        'UW-RestClients-Core~=1.4',
-        'UW-RestClients-Canvas~=1.2',
-        'UW-Grade-Conversion-Calculator>=1.4',
+        'uw-restclients-core~=1.4',
+        'uw-restclients-canvas~=1.2',
+        'uw-grade-conversion-calculator>=1.4',
     ],
     license='Apache License, Version 2.0',
     description=(
