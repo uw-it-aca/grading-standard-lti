@@ -84,7 +84,7 @@ externalSecrets:
         - name: canvas-api-token
           property: canvas-api-token
     - name: test-grading-standards.canvas.uw.edu-lti-keys
-      externalKey: test-grading-standards/test/lti-keys
+      externalKey: grading-standards/test/lti-keys
       data:
         - name: private-key-1.key
           property: private-key-1.key
