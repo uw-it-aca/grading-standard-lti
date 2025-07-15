@@ -22,6 +22,7 @@ setup(
         'django~=4.2',
         'django-blti~=3.0',
         'django-compressor',
+        'uw-memcached-clients~=1.0',
         'uw-restclients-core~=1.4',
         'uw-restclients-canvas~=1.2',
         'uw-grade-conversion-calculator>=1.4',
