@@ -46,7 +46,10 @@ namespace:
   enabled: true
 
 memcached:
-  enabled: false
+  enabled: true
+  replicaCount: 1
+  updateStrategy:
+    type: RollingUpdate
 
 certs:
   mounted: false
@@ -58,6 +61,8 @@ environmentVariables:
     value: BLTI
   - name: ENV
     value: prod
+  - name: SESSION_BACKEND
+    value: MEMCACHED
   - name: CANVAS_ENV
     value: PROD
   - name: CANVAS_TIMEOUT
