@@ -35,6 +35,8 @@ database:
   secretName: test-grading-standards.canvas.uw.edu-sql-secrets
 repo: grading-standards
 instance: test
+namespace:
+  enabled: true
 memcached:
   enabled: false
 certs:
@@ -77,7 +79,7 @@ externalSecrets:
         - name: canvas-api-token
           property: canvas-api-token
     - name: test-grading-standards.canvas.uw.edu-lti-keys
-      externalKey: grading-standards/test/lti-keys
+      externalKey: test-grading-standards/test/lti-keys
       data:
         - name: private-key-1.key
           property: private-key-1.key
