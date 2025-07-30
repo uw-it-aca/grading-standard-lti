@@ -35,8 +35,13 @@ database:
   secretName: test-grading-standards.canvas.uw.edu-sql-secrets
 repo: grading-standards
 instance: test
+namespace:
+  enabled: true
 memcached:
-  enabled: false
+  enabled: true
+  replicaCount: 1
+  updateStrategy:
+    type: RollingUpdate
 certs:
   mounted: false
 environmentVariables:
@@ -46,10 +51,14 @@ environmentVariables:
     value: BLTI
   - name: ENV
     value: test
+  - name: SESSION_BACKEND
+    value: MEMCACHED
   - name: CANVAS_ENV
     value: EVAL
   - name: CANVAS_TIMEOUT
     value: "10"
+  - name: LTI_CONFIG_DIRECTORY
+    value: /lti/config
 externalSecrets:
   enabled: true
   secrets:
@@ -74,6 +83,13 @@ externalSecrets:
       data:
         - name: canvas-api-token
           property: canvas-api-token
+    - name: test-grading-standards.canvas.uw.edu-lti-keys
+      externalKey: grading-standards/test/lti-keys
+      data:
+        - name: private-key-1.key
+          property: private-key-1.key
+        - name: public-key-1.key
+          property: public-key-1.key
     - name: test-grading-standards.canvas.uw.edu-sql-secrets
       externalKey: canvas/shared/sql-secrets
       data:
@@ -106,3 +122,35 @@ environmentVariablesSecrets:
     name: CANVAS_OAUTH_BEARER
     secretName: test-grading-standards.canvas.uw.edu-canvas-secrets
     secretKey: canvas-api-token
+
+mountedSecrets:
+  enabled: true
+  mountPath: /lti/keys
+  secretName: test-grading-standards.canvas.uw.edu-lti-keys
+
+podVolumes:
+  lti-tool-config:
+    volume:
+      configMap:
+        name: lti-tool-config
+    mount:
+      mountPath: /lti/config
+    containers: [base]
+
+configmaps:
+  lti-tool-config:
+    tool.json: |
+      {
+        "https://canvas.test.instructure.com": [{
+          "default": true,
+          "client_id": "100000000000813",
+          "auth_login_url": "https://sso.test.canvaslms.com/api/lti/authorize_redirect",
+          "auth_token_url": "https://sso.test.canvaslms.com/login/oauth2/token",
+          "key_set": null,
+          "key_set_url": "https://sso.test.canvaslms.com/api/lti/security/jwks",
+          "private_key_file": "/lti/keys/private-key-1.key",
+          "public_key_file": "/lti/keys/public-key-1.key",
+          "deployment_ids": ["214644:c78d46b24c785a8ad37b5bf9bdf26ceb32cc9d18",
+                    "214316:c78d46b24c785a8ad37b5bf9bdf26ceb32cc9d18"]
+        }]
+      }
