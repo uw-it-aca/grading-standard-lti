@@ -22,4 +22,5 @@ STATICFILES_FINDERS += (
     'compressor.finders.CompressorFinder',
 )
 
+RESTCLIENTS_CANVAS_USER_AGENT = 'UW-GradingStandard-LTI/0.1'
 DOCUMENTATION_URL = os.getenv('DOCUMENTATION_URL')
