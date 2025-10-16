@@ -1,0 +1,59 @@
+{% verbatim %}
+<script id="grade-conversion-calculator-tmpl" type="text/x-handlebars-template">
+<div class="gp-conversion-form">
+    <div class="gp-calculator-container">
+
+        <div class="btn-group gp-scale-selector">
+            <label for="import_scale_selector" class="sr-only">{{ trans "conversion_scale_chooser_label" }}</label>
+            <select id="import_scale_selector" class="form-control gp-scale-select">
+                <option value="ug">{{ trans "conversion_scale_ug" }}</option>
+                <option value="gr">{{ trans "conversion_scale_gr" }}</option>
+                <option value="cnc">{{ trans "conversion_scale_cnc" }}</option>
+                <option value="pf">{{ trans "conversion_scale_pf" }}</option>
+                <option value="hpf">{{ trans "conversion_scale_hpf" }}</option>
+            </select>
+        </div>
+
+        <div class="gp-resource-conversion-calculator" aria-labelledby="grade_conversion_header">
+            <div class="clearfix gp-calculator-header">
+            <h4 class="sr-only" id="grade_conversion_header">{{ trans "calculator_header"}}</h4>
+            <span class="sr-only">{{ trans "calculator_instructions" }}</span>
+                <div class="pull-left gp-col-label-left" aria-hidden="true">{{ trans "calculator_perc_label_vis" }}</div>
+                <div class="pull-right gp-col-label-right" aria-hidden="true">{{ trans "calculator_grade_label"}}</div>
+            </div>
+            <ol class="gp-calculator-row-container"></ol>
+            <div class="clearfix gp-conversion-calculator-buttons">
+                <span class="gp-btn-convert-clear">
+                    <button type="button" class="btn btn-link" title="{{ trans "calculator_reset_title"}}">{{ trans "reset" }}</button>
+                </span>
+                <span class="pull-right gp-btn-convert-apply">
+                    <button type="button" class="btn gp-btn" title="{{ trans "calculator_apply_title" }}" aria-controls="conversion_grade_scale_container"><i class="fa fa-angle-double-down fa-lg"></i> {{ trans "apply" }}</button>
+                </span>
+            </div>
+        </div> <!-- end gp-resource-conversion-calculator -->
+
+        <div class="gp-resource-conversion-scale" id="conversion_grade_scale_container" aria-labelledby="grade_scale_header">
+            <h4 class="sr-only" id="grade_scale_header">{{ trans "grade_scale_header" }}</h4>
+            <div class="clearfix gp-scale-header">
+                <div class="pull-left gp-col-label-left" aria-hidden="true">{{ trans "grade_scale_grade_label_vis" }}</div>
+                <div class="pull-right gp-col-label-right" aria-hidden="true">{{ trans "calculator_grade_label"}}</div>
+            </div>
+            <ol class="gp-scale-row-container" aria-label="{{ trans "grade_scale_list_label_sr" }}"></ol>
+            <span class="gp-btn-scale-clear">
+                    <button type="button" class="btn btn-link">{{ trans "grade_scale_clear" }}</button>
+            </span>
+        </div> <!-- end gp-resource-conversion-scale -->
+    </div> <!-- gp-calculator-container -->
+</div> <!-- gp-conversion-form -->
+
+<div class="clearfix gp-import-conversion-btns" style="max-width:480px;margin:10px 0;">
+    <div class="clearfix">
+        <button type="button" class="pull-left btn btn-link gp-convert-cancel" title="{{ trans 'cancel_title' }}">{{ trans "cancel" }}</button>
+        <button type="button" class="pull-right btn gp-btn gp-convert-review" title="{{ trans 'conversion_submit_title' }}">{{ trans "conversion_submit" }} <i class="fa fa-angle-double-right fa-lg"></i></button>
+    </div>
+    <div id="grade_conversion_invalid_err" role="alert">
+        <span class="pull-right gp-conversion-err"></span>
+    </div>
+</div>
+</script>
+{% endverbatim %}

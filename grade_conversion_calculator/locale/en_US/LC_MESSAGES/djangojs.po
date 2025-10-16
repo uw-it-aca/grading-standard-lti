@@ -1,0 +1,149 @@
+msgid "reset"
+msgstr "Reset"
+
+msgid "apply"
+msgstr "Apply"
+
+msgid "cancel"
+msgstr "Cancel"
+
+msgid "cancel_title"
+msgstr "Cancel"
+
+msgid "learn_more"
+msgstr "Learn more"
+
+msgid "confirm"
+msgstr "Confirm"
+
+msgid "conversion_instructions"
+msgstr "To use the conversion calculator, enter minimum percentages and equivalent class grades in two or more rows in the calculator, and click Apply. The calculator fills in the rest of the grade point scale."
+
+msgid "conversion_header"
+msgstr "Convert Final Score to Grade Points"
+
+msgid "conversion_scale_chooser_label"
+msgstr "Choose your grade scale:"
+
+msgid "conversion_scale_ug"
+msgstr "Undergraduate Scale (4.0-0.7)"
+
+msgid "conversion_scale_gr"
+msgstr "Graduate Scale (4.0-1.7)"
+
+msgid "conversion_scale_cnc"
+msgstr "Credit/No Credit Scale"
+
+msgid "conversion_scale_pf"
+msgstr "School of Medicine Pass/No Pass"
+
+msgid "conversion_scale_hpf"
+msgstr "Honors/High Pass/Pass/Fail Scale"
+
+msgid "calculator_min_cnc"
+msgstr "Set the minimum score for a Credit grade in the grade scale below."
+
+msgid "calculator_min_pf"
+msgstr "Set the minimum score for a Pass grade in the grade scale below."
+
+msgid "calculator_min_hpf"
+msgstr "Set the minimum score for Honors, High Pass, and Pass grades in the grade scale below."
+
+msgid "calculator_min_invalid"
+msgstr "Invalid percentage"
+
+msgid "calculator_min_missing"
+msgstr "Required"
+
+msgid "calculator_grade_invalid"
+msgstr "Invalid grade"
+
+msgid "calculator_grade_missing"
+msgstr "Required"
+
+msgid "min_percentage_duplicate"
+msgstr "Duplicate"
+
+msgid "calculator_header"
+msgstr "Grade conversion calculator"
+
+msgid "calculator_instructions" 
+msgstr "Set at least two Percentage to Grade Point conversion points and click Apply to create the full Grade Scale below."
+
+msgid "calculator_legend"
+msgstr "Relate a Final Score (percentage) to a Grade Point: "
+
+msgid "calculator_perc_label_vis"
+msgstr "Final Score"
+
+msgid "calculator_perc_label"
+msgstr "Final Score (percentage) "
+
+msgid "calculator_grade_label"
+msgstr "Grade Point"
+
+msgid "calculator_perc_label_upper"
+msgstr "Upper Limit: Final Score (percentage) "
+
+msgid "calculator_grade_label_upper"
+msgstr "Upper Limit: Grade Point"
+
+msgid "calculator_perc_label_lower"
+msgstr "Lower Limit: Final Score (percentage) "
+
+msgid "calculator_grade_label_lower"
+msgstr "Lower Limit: Grade Point"
+
+msgid "calculator_addrow_title"
+msgstr "Add a row to the conversion table. Leave unused rows blank."
+
+msgid "calculator_addrow" 
+msgstr "+ Add a row"
+
+msgid "calculator_reset_title" 
+msgstr "Reset the grade conversion calculator"
+
+msgid "calculator_apply_title" 
+msgstr "Create grade scale"
+
+msgid "grade_scale_header" 
+msgstr "Grade Scale:"
+
+msgid "grade_scale_grade_label_vis"
+msgstr "Minimum score for class grade"
+
+msgid "grade_scale_list_label_sr"
+msgstr "Review and adjust Grade Scale:"
+
+msgid "grade_scale_input_title" 
+msgstr "Minimum percentage that will result in a "
+
+msgid "grade_scale_limit_pre" 
+msgstr "Any final grade below a "
+
+msgid "grade_scale_limit_post" 
+msgstr "% will result in a "
+
+msgid "grade_scale_clear"
+msgstr "Clear scale"
+
+msgid "conversion_submit"
+msgstr "Review converted grades"
+
+msgid "conversion_submit_title"
+msgstr "Review converted grades"
+
+msgid "conversion_back_calc"
+msgstr "Back to calculator"
+
+msgid "conversion_confirm_btn_sr"
+msgstr " grades for import"
+
+msgid "conversion_confirm_grade_text"
+msgstr "converted to"
+
+msgid "<strong>One invalid grade</strong> (see above)"
+msgstr ""
+
+msgid "<strong>%(count)s invalid grades</strong> (see above)"
+msgstr ""
