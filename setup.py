@@ -25,7 +25,6 @@ setup(
         'uw-memcached-clients~=1.0',
         'uw-restclients-core~=1.4',
         'uw-restclients-canvas~=1.2',
-        'uw-grade-conversion-calculator>=1.4',
     ],
     license='Apache License, Version 2.0',
     description=(

@@ -1,0 +1,63 @@
+/*** breakpoints ***/
+
+@desktop: ~"screen and (min-width: 768px)";
+@widescreen: ~"screen and (min-width: 1200px)";
+
+/*** less variables ***/
+
+@danger: #E35757;
+@success: #63AD45;
+@warning: #EBDD5A;
+@purple-light: #584FA1;
+@purple-dark: #39275B; /*#563d7c; */
+@header-bg: #f2f2f2; 
+@gp-text: #404652;
+
+
+/*** conversion calculator desktop ***/
+
+
+.gp-conversion-form { 
+	.gp-calculator-container { 
+		 h3 {font-size: 1.7em;}
+		.gp-scale-selector {
+			.gp-scale-select {
+				font-size:1em;
+			}
+		}	        			
+		.gp-resource-conversion-calculator { 
+			.gp-calculator-header {
+    			.gp-col-label {}
+			}
+			.gp-calculator-add-row-container {}
+    		.gp-calculator-row {
+    			.gp-calc-input {}
+        		.gp-calc-percentage {}
+				.gp-calc-grade {}				        		
+        		.gp-calc-equals {}
+        		.gp-percent-sign {}
+        		.calculator-err {font-size:80%; margin-left: 5px; margin-bottom: 0;}
+    		}			        		
+		}
+		.gp-conversion-calculator-buttons {}
+		.gp-resource-conversion-scale { 
+			.gp-scale-header {
+    			.gp-col-label {}
+			}
+    		.gp-scale-row {
+    			.gp-scale-row-grade {
+        			.min-percentage-err {padding-left:45px;}
+    			}
+    			.gp-min-sign {}
+    			.gp-calc-percentage {}
+        		.gp-calc-grade {
+	        		margin-left:30%;
+        		}
+        		.gp-calc-equals {
+        		}
+        		.gp-percent-sign {}
+        	    .calculator-err {font-size:80%; margin-left: 5px; margin-bottom: 0;}	
+    		}
+		}
+	}
+}	
