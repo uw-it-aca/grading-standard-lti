@@ -62,7 +62,7 @@
 		Created on {{{created_date}}}
 	</div>
 	<div class="pull-right remove-button">
-		<button type="button" class="btn-xs btn-oldlook" title="Remove '{{{name}}}' ">Remove</button>
+		<button type="button" class="btn btn-danger btn-sm" title="Remove '{{{name}}}' ">Remove</button>
 	</div>
 
 	{{#if saved}}
@@ -76,9 +76,9 @@
 
 {% verbatim %}
 <script id="grading-success-tmpl" type="text/x-handlebars-template">
-<div class="alert alert-success alert-dismissable" role="alert" >
-  	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-  	<p>"{{scheme_name}}" is now available to {{course_name}} assignments.</p>
+<div class="alert alert-success alert-dismissible" role="alert" >
+  	<button type="button" class="btn-close" data-dismiss="alert" aria-hidden="true" aria-label="Close"></button>
+  	<div>"{{scheme_name}}" is now available to {{course_name}} assignments.</div>
 </div>
 </script>
 {% endverbatim %}
@@ -102,8 +102,8 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="visually-hidden">Close</span></button>
         <h3 class="modal-title" id="myModalLabel">Name Your Grade Scale</h3>
+        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
 		<p>Give the new scale a unique name before adding to {{ course_name }}</p>
@@ -117,8 +117,8 @@
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-oldlook" data-dismiss="modal">Cancel</button>
-        <button id="save-valid-scheme" type="submit" class="btn btn-primary gp-btn">Done</button>
+        <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cancel</button>
+        <button id="save-valid-scheme" type="submit" class="btn btn-primary">Done</button>
       </div>
     </div>
   </div>
@@ -140,7 +140,7 @@
           <p>{{ failure_message }}</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-oldlook" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
@@ -161,7 +161,7 @@
         <p>{{error_count}} invalid grades found.  Correct indicated errors and try again.</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-oldlook" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
@@ -184,8 +184,8 @@
          <a href="{{documentation_url}}" target="_blank">Learn how to delete a grade scale</a></p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-oldlook" data-dismiss="modal">Close</button>
-        <button id="remove-scheme" type="submit" class="btn btn-primary gp-btn" title="Remove from your 4.0 scales">Remove</button>
+        <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Close</button>
+        <button id="remove-scheme" type="submit" class="btn btn-danger" title="Remove from your 4.0 scales">Remove</button>
       </div>
     </div>
   </div>
