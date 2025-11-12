@@ -27,15 +27,15 @@ class GradingStandardTest(TestCase):
             created_by='javerage', is_deleted__isnull=True, name='abc')
 
     def test_valid_scheme_name(self):
-        self.assertEquals(
+        self.assertEqual(
             GradingStandard.valid_scheme_name('valid'), 'valid')
-        self.assertEquals(
+        self.assertEqual(
             GradingStandard.valid_scheme_name(' valid   '), 'valid')
-        self.assertEquals(
+        self.assertEqual(
             GradingStandard.valid_scheme_name(u'valid'), 'valid')
-        self.assertEquals(
+        self.assertEqual(
             GradingStandard.valid_scheme_name('名称'), '名称')
-        self.assertEquals(
+        self.assertEqual(
             GradingStandard.valid_scheme_name('123'), '123')
         self.assertRaises(
             ValidationError, GradingStandard.valid_scheme_name, '  ')
@@ -43,9 +43,9 @@ class GradingStandardTest(TestCase):
             ValidationError, GradingStandard.valid_scheme_name, None)
 
     def test_valid_scale(self):
-        self.assertEquals(GradingStandard.valid_scale('ug'), 'ug')
-        self.assertEquals(GradingStandard.valid_scale('gr'), 'gr')
-        self.assertEquals(GradingStandard.valid_scale('UG'), 'ug')
+        self.assertEqual(GradingStandard.valid_scale('ug'), 'ug')
+        self.assertEqual(GradingStandard.valid_scale('gr'), 'gr')
+        self.assertEqual(GradingStandard.valid_scale('UG'), 'ug')
         self.assertRaises(ValidationError, GradingStandard.valid_scale, '')
         self.assertRaises(ValidationError, GradingStandard.valid_scale, None)
         self.assertRaises(ValidationError, GradingStandard.valid_scale, 'abc')
@@ -53,7 +53,7 @@ class GradingStandardTest(TestCase):
 
     def test_valid_grading_scheme(self):
         scheme = [1, 2, 3]
-        self.assertEquals(GradingStandard.valid_grading_scheme(scheme), scheme)
+        self.assertEqual(GradingStandard.valid_grading_scheme(scheme), scheme)
         self.assertRaises(
             ValidationError, GradingStandard.valid_grading_scheme, None)
         self.assertRaises(
@@ -64,9 +64,9 @@ class GradingStandardTest(TestCase):
             ValidationError, GradingStandard.valid_grading_scheme, [])
 
     def test_valid_course_id(self):
-        self.assertEquals(GradingStandard.valid_course_id('abc'), 'abc')
-        self.assertEquals(GradingStandard.valid_course_id('ABC'), 'ABC')
-        self.assertEquals(GradingStandard.valid_course_id('34'), '34')
+        self.assertEqual(GradingStandard.valid_course_id('abc'), 'abc')
+        self.assertEqual(GradingStandard.valid_course_id('ABC'), 'ABC')
+        self.assertEqual(GradingStandard.valid_course_id('34'), '34')
         self.assertRaises(
             ValidationError, GradingStandard.valid_course_id, '')
         self.assertRaises(
@@ -75,9 +75,10 @@ class GradingStandardTest(TestCase):
             ValidationError, GradingStandard.valid_course_id, None)
 
     def test_json_data(self):
-        json_data = GradingStandard(
-            name='abc', scheme='[1, 2, 3]', created_by='j',
-            created_date=datetime.now()).json_data()
+        model = GradingStandard(name='abc', scheme='[1, 2, 3]', created_by='j',
+                                created_date=datetime.now())
+        model.save()
+        json_data = model.json_data()
 
         self.assertEqual(json_data['created_by'], 'j')
         self.assertEqual(json_data['name'], 'abc')

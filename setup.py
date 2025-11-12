@@ -19,13 +19,12 @@ setup(
     packages=['grading_standard'],
     include_package_data=True,
     install_requires = [
-        'django~=4.2',
+        'django~=5.2',
         'django-blti~=3.0',
         'django-compressor',
         'uw-memcached-clients~=1.0',
         'uw-restclients-core~=1.4',
         'uw-restclients-canvas~=1.2',
-        'uw-grade-conversion-calculator>=1.4',
     ],
     license='Apache License, Version 2.0',
     description=(
@@ -33,7 +32,7 @@ setup(
         'Canvas course'),
     long_description=README,
     url='https://github.com/uw-it-aca/grading-standard-lti',
-    author="UW-IT T&LS",
+    author="UW-IT Student & Educational Technology Services",
     author_email="aca-it@uw.edu",
     classifiers=[
         'Environment :: Web Environment',

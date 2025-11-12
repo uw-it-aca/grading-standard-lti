@@ -1,0 +1,100 @@
+/*** breakpoints ***/
+
+@phablet: ~"screen and (min-width: 768px)";
+@landscape: ~"screen and (min-width: 1024px)";
+
+/*** less variables ***/
+
+@danger: #E35757;
+@success: #63AD45;
+@warning: #EBDD5A;
+@purple-light: #584FA1;
+@purple-dark: #39275B; /*#563d7c; */
+@header-bg: #f2f2f2; 
+@gp-text: #404652;
+@gp-checked: #777777;
+@gp-link: #108BCC;
+
+/*** less mixins ***/
+
+
+
+/*** conversion calculator app ***/
+
+
+.gp-conversion-form { 
+		max-width:480px; 
+		border: 1px solid #eee;
+		-webkit-border-radius: 5px;
+		-moz-border-radius: 5px;
+		border-radius: 5px;
+	.gp-calculator-container { 
+		h3 {font-size:1.3em; margin-top:10px; margin-bottom:20px;}
+		input[type=number]::-webkit-inner-spin-button,
+		input[type=number]::-webkit-outer-spin-button {
+			-webkit-appearance: none;
+			margin: 0;
+		}
+		ol {margin:0; padding-left:0; list-style: none;}
+		hr {}
+		.gp-scale-selector {width:100%; border-bottom: 1px solid @header-bg;
+			.gp-scale-select {
+				background: url('../img/fa-caret-down3.png')  no-repeat transparent;
+				background-position: 98% 5px;
+				background-size: 20px 20px;
+    		    border-radius: 0;
+			    border:0;
+			    -webkit-appearance: none;
+			    -moz-appearance: none;
+			    text-transform: uppercase;
+			    font-size:.85em;
+			}
+		}	        			
+		.gp-resource-conversion-calculator { padding:20px 10px 10px 10px; background-color:#f2f2f2;margin: 3px 3px 0 3px;
+			.gp-calculator-header {font-weight:bold; padding: 10px 0;
+    			.gp-col-label-right {text-align: right; padding-right: 15px; width: 50%;}
+    			.gp-col-label-left {text-align: left; padding-left: 15px; width: 50%;}
+			}
+			.gp-calculator-add-row-container {padding: 0 0 15px 15px;}
+    		.gp-calculator-row {
+    			.gp-calc-input-percentage {text-align:right;}
+        		.gp-calc-percentage {float:left;}
+				.gp-calc-grade {float:right;}				        		
+        		.gp-calc-equals {font-size: 1.2em;margin:0 15px;font-weight:bold;}
+        		.gp-percent-sign {font-size: 1.2em; line-height: 2;padding:10px 10px 10px 0;font-weight:bold;}
+        		.gp-calc-err {color:@danger;min-width:130px;}
+    		}			       
+		}
+		.gp-conversion-calculator-buttons {padding:10px 10px 10px 0;background-color:#f2f2f2;margin: 0 3px;}
+		.gp-resource-conversion-scale { padding:20px 10px 10px 10px; background-color:#f2f2f2;margin: 0 3px 3px 3px;
+			.gp-scale-header {font-weight:bold; padding: 10px 0;
+    			.gp-col-label-right {text-align: right; padding-right: 15px; width: 50%;}
+    			.gp-col-label-left {text-align: left; padding-left: 15px; width: 50%;}
+			}
+    		.gp-scale-row {
+    			&.gp-scale-row-selected {background-color: #ddd;padding: 5px 0;}
+    			&.gp-lowest-grade {
+        			.gp-calc-percentage {text-align:right;padding-top:8px;}
+    			}
+        		.gp-calc-err {color:@danger;min-width:130px;}
+    			.gp-min-sign {font-size: 1.2em; line-height: 2; padding:0 10px;font-weight:bold;}
+    			.gp-calc-percentage {float:left;}
+    			.gp-calc-input-percentage {text-align:right;}
+        		.gp-calc-grade {}
+        		.gp-calc-equals {font-size: 1.2em;margin:0 15px;font-weight:bold;}
+        		.gp-percent-sign {font-size: 1.2em; line-height: 2;padding:10px 10px 10px 0;font-weight:bold;}
+    		}
+		}
+	}
+}	
+
+.gp-confirm-conversion {
+	.gp-roster-list {
+    	.gp-roster-list-item {
+        	.gp-review-grade {font-size:.7em;text-align:right;}
+    	}
+	}
+}
+.gp-import-conversion-btns {
+	.gp-conversion-err {color:@danger; font-size: 90%; margin-top: 5px;}
+}
