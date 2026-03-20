@@ -32,7 +32,7 @@ setup(
         "Canvas course"),
     long_description=README,
     url="https://github.com/uw-it-aca/grading-standard-lti",
-    author="UW-IT Student & Educational Technology Services",
+    author="UWIT Student & Educational Technology Services",
     author_email="aca-it@uw.edu",
     classifiers=[
         "Environment :: Web Environment",
