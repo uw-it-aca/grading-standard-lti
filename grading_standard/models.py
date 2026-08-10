@@ -1,9 +1,10 @@
 # Copyright 2026 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
-from django.db import models
-from django.core.exceptions import ValidationError
 import json
+
+from django.core.exceptions import ValidationError
+from django.db import models
 
 
 class GradingStandardManager(models.Manager):
@@ -14,8 +15,7 @@ class GradingStandardManager(models.Manager):
         if name is not None:
             kwargs['name'] = name
 
-        return super(GradingStandardManager, self).get_queryset().filter(
-            **kwargs).order_by('created_date')
+        return super().get_queryset().filter(**kwargs).order_by('created_date')
 
 
 class GradingStandard(models.Model):
@@ -43,7 +43,7 @@ class GradingStandard(models.Model):
     def json_data(self):
         try:
             scheme_data = json.loads(self.scheme)
-        except Exception as ex:
+        except Exception:
             scheme_data = []
 
         course_ids = list(GradingStandardCourse.objects.filter(
@@ -78,7 +78,7 @@ class GradingStandard(models.Model):
             for choice in GradingStandard.SCALE_CHOICES:
                 if scale == choice[0]:
                     return scale
-        raise ValidationError('Invalid scale: {}'.format(scale))
+        raise ValidationError(f'Invalid scale: {scale}')
 
     @staticmethod
     def valid_grading_scheme(scheme):

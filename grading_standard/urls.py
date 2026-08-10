@@ -3,7 +3,8 @@
 
 from django.urls import re_path
 from django.views.i18n import JavaScriptCatalog
-from grading_standard.views import LaunchView, GradingStandardView
+
+from grading_standard.views import GradingStandardView, LaunchView
 
 urlpatterns = [
     re_path(r'^$', LaunchView.as_view(), name="lti-launch"),

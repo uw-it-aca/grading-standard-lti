@@ -1,15 +1,17 @@
 # Copyright 2026 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
+import json
+import logging
+
+from blti.views import BLTILaunchView, RESTDispatch
+from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.utils import timezone
-from django.conf import settings
-from blti.views import BLTILaunchView, RESTDispatch
-from grading_standard.models import GradingStandard, GradingStandardCourse
-from grading_standard.dao.canvas import create_grading_standard
 from restclients_core.exceptions import DataFailureException
-import logging
-import json
+
+from grading_standard.dao.canvas import create_grading_standard
+from grading_standard.models import GradingStandard, GradingStandardCourse
 
 logger = logging.getLogger(__name__)
 
@@ -27,7 +29,7 @@ class LaunchView(BLTILaunchView):
         if self.blti.course_sis_id:
             course_sis_id = self.blti.course_sis_id
         else:
-            course_sis_id = 'course_{}'.format(course_id)
+            course_sis_id = f'course_{course_id}'
 
         return {
             'session_id': self.request.session.session_key,
@@ -37,7 +39,7 @@ class LaunchView(BLTILaunchView):
             'course_title': self.blti.course_long_name,
             'course_name': self.blti.course_short_name,
             'launch_presentation_return_url': self.blti.return_url,
-            'documentation_url': getattr(settings, 'DOCUMENTATION_URL'),
+            'documentation_url': settings.DOCUMENTATION_URL,
         }
 
 
@@ -63,9 +65,8 @@ class GradingStandardView(RESTDispatch):
             })
 
         except ValidationError as err:
-            return self.error_response(
-                400, "Invalid grading scheme: {}".format(err))
-        except IndexError as err:
+            return self.error_response(400, f"Invalid grading scheme: {err}")
+        except IndexError:
             return self.error_response(404, "Grading Standard not found")
 
     def post(self, request, *args, **kwargs):
@@ -75,14 +76,11 @@ class GradingStandardView(RESTDispatch):
         try:
             data = json.loads(request.body).get("grading_standard", {})
             name = GradingStandard.valid_scheme_name(data.get("name", ""))
-            course_sis_id = GradingStandard.valid_course_id(
-                data.get("course_id", "").strip())
+            GradingStandard.valid_course_id(data.get("course_id", "").strip())
             scale = GradingStandard.valid_scale(data.get("scale", "").strip())
-            scheme_data = GradingStandard.valid_grading_scheme(
-                data.get("scheme", []))
+            scheme_data = GradingStandard.valid_grading_scheme(data.get("scheme", []))
         except ValidationError as err:
-            return self.error_response(
-                400, "Invalid grading scheme: {}".format(err))
+            return self.error_response(400, f"Invalid grading scheme: {err}")
 
         try:
             grading_standard = GradingStandard.objects.find_by_login(
@@ -106,9 +104,7 @@ class GradingStandardView(RESTDispatch):
         except DataFailureException as ex:
             grading_standard.save()
             return self.error_response(
-                500,
-                "There was a problem saving this scale in Canvas: {}".format(
-                    ex.msg))
+                500, f"There was a problem saving this scale in Canvas: {ex.msg}")
 
         grading_standard.name = canvas_gs.title
         grading_standard.provisioned_date = timezone.now()
@@ -146,7 +142,7 @@ class GradingStandardView(RESTDispatch):
         grading_standard.deleted_date = timezone.now()
         grading_standard.save()
 
-        logger.info("Grading scheme deleted: {}".format(gs_id))
+        logger.info(f"Grading scheme deleted: {gs_id}")
 
         return self.json_response({
             "grading_standard": grading_standard.json_data()
