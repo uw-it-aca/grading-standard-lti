@@ -25,6 +25,7 @@ setup(
         "uw-memcached-clients~=1.0",
         "uw-restclients-core~=1.4",
         "uw-restclients-canvas~=1.2",
+        "psycopg[c]",
     ],
     license="Apache License, Version 2.0",
     description=(
