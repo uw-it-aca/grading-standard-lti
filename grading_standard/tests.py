@@ -1,46 +1,41 @@
 # Copyright 2026 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
-# -*- coding:utf-8 -*-
-from django.test import TestCase
+
+from datetime import datetime, timezone
+from unittest import mock
+
 from django.core.exceptions import ValidationError
 from django.db.models.query import QuerySet
+from django.test import TestCase
+
 from grading_standard.dao.canvas import *
 from grading_standard.models import GradingStandard
-from datetime import datetime
-import mock
 
 
 class GradingStandardTest(TestCase):
     @mock.patch.object(QuerySet, 'filter')
     def test_find_by_login(self, mock_method):
-        r = GradingStandard.objects.find_by_login('javerage')
+        GradingStandard.objects.find_by_login('javerage')
         mock_method.assert_called_with(
             created_by='javerage', is_deleted__isnull=True)
 
-        r = GradingStandard.objects.find_by_login('javerage', id='123')
+        GradingStandard.objects.find_by_login('javerage', id='123')
         mock_method.assert_called_with(
             created_by='javerage', is_deleted__isnull=True, id='123')
 
-        r = GradingStandard.objects.find_by_login('javerage', name='abc')
+        GradingStandard.objects.find_by_login('javerage', name='abc')
         mock_method.assert_called_with(
             created_by='javerage', is_deleted__isnull=True, name='abc')
 
     def test_valid_scheme_name(self):
-        self.assertEqual(
-            GradingStandard.valid_scheme_name('valid'), 'valid')
-        self.assertEqual(
-            GradingStandard.valid_scheme_name(' valid   '), 'valid')
-        self.assertEqual(
-            GradingStandard.valid_scheme_name(u'valid'), 'valid')
-        self.assertEqual(
-            GradingStandard.valid_scheme_name('名称'), '名称')
-        self.assertEqual(
-            GradingStandard.valid_scheme_name('123'), '123')
-        self.assertRaises(
-            ValidationError, GradingStandard.valid_scheme_name, '  ')
-        self.assertRaises(
-            ValidationError, GradingStandard.valid_scheme_name, None)
+        self.assertEqual(GradingStandard.valid_scheme_name('valid'), 'valid')
+        self.assertEqual(GradingStandard.valid_scheme_name(' valid   '), 'valid')
+        self.assertEqual(GradingStandard.valid_scheme_name('valid'), 'valid')
+        self.assertEqual(GradingStandard.valid_scheme_name('名称'), '名称')
+        self.assertEqual(GradingStandard.valid_scheme_name('123'), '123')
+        self.assertRaises(ValidationError, GradingStandard.valid_scheme_name, '  ')
+        self.assertRaises(ValidationError, GradingStandard.valid_scheme_name, None)
 
     def test_valid_scale(self):
         self.assertEqual(GradingStandard.valid_scale('ug'), 'ug')
@@ -76,7 +71,7 @@ class GradingStandardTest(TestCase):
 
     def test_json_data(self):
         model = GradingStandard(name='abc', scheme='[1, 2, 3]', created_by='j',
-                                created_date=datetime.now())
+                                created_date=datetime.now(timezone.utc))
         model.save()
         json_data = model.json_data()
 
@@ -93,14 +88,14 @@ class CanvasDAOTest(TestCase):
         scheme = []
         sis_user_id = 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
 
-        r = create_grading_standard(course_id, name, scheme, sis_user_id)
+        create_grading_standard(course_id, name, scheme, sis_user_id)
         mock_method.assert_called_with(
             course_id, name, [{'name': '0.0', 'value': 0}],
             'sis_user_id:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
 
-        scheme = scheme = [{'grade': '4.0', 'min_percentage': 95}]
+        scheme = [{'grade': '4.0', 'min_percentage': 95}]
 
-        r = create_grading_standard(course_id, name, scheme, sis_user_id)
+        create_grading_standard(course_id, name, scheme, sis_user_id)
         mock_method.assert_called_with(
             course_id, name,
             [{'name': '4.0', 'value': 95}, {'name': '0.0', 'value': 0}],
