@@ -12,6 +12,11 @@ ingress:
         - "/"
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt
+gateway:
+  enabled: true
+  hostnames:
+    -  test-grading-standards.canvas.uw.edu
+  maxRequestSize: 1Mi
 lifecycle:
   enabled: true
   preStop:
