@@ -15,7 +15,7 @@ ingress:
 gateway:
   enabled: true
   hostnames:
-    -  test-grading-standards.canvas.uw.edu
+    - test-grading-standards.canvas.uw.edu
   maxRequestSize: 1Mi
 lifecycle:
   enabled: true
