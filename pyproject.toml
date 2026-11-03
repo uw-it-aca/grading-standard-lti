@@ -1,0 +1,66 @@
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "Grading-Standard-LTI"
+dynamic = ["version"]
+description = "LTI app for creating 4.0 grading standards and adding them to a Canvas course"
+readme = "README.md"
+license = "Apache-2.0"
+authors = [
+    {name = "UWIT Student & Educational Technology Services", email = "aca-it@uw.edu"}
+]
+classifiers = [
+    "Environment :: Web Environment",
+    "Framework :: Django",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+]
+dependencies = [
+    "django~=5.2",
+    "django-blti~=3.0",
+    "django-compressor",
+    "uw-memcached-clients~=1.0",
+    "uw-restclients-core~=1.4",
+    "uw-restclients-canvas~=1.2",
+    "psycopg[c]",
+]
+
+[project.optional-dependencies]
+dev = [
+    "ruff",
+]
+
+[tool.setuptools]
+packages = ["grading_standard", "grade_conversion_calculator"]
+include-package-data = true
+
+[tool.setuptools.dynamic]
+version = {file = "grading_standard/VERSION"}
+
+[tool.ruff]
+line-length = 88
+exclude = [
+    "grading_standard/migrations/*",
+]
+
+[tool.ruff.lint]
+ignore = [
+    "BLE001",  # allow broad Exception catches
+]
+
+[tool.coverage.run]
+source = ["grading-standard-lti"]
+parallel = true
+omit = [
+     "grading_standard/migrations/*",
+     "grading_standard/tests.py"
+]
+
+[tool.coverage.paths]
+source = [
+    "grading_standard/",
+    "/app/grading_standard/",
+]

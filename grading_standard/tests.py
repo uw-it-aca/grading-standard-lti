@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from unittest import mock
 
 from django.core.exceptions import ValidationError
@@ -71,7 +71,7 @@ class GradingStandardTest(TestCase):
 
     def test_json_data(self):
         model = GradingStandard(name='abc', scheme='[1, 2, 3]', created_by='j',
-                                created_date=datetime.now(timezone.utc))
+                                created_date=datetime.now(UTC))
         model.save()
         json_data = model.json_data()
 
